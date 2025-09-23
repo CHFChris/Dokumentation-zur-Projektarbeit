@@ -1,0 +1,16 @@
+site_name: Abschlussprojekt Doku
+theme:
+  name: material
+  language: de
+nav:
+  - Start: index.md
+  - Projektsteckbrief: Projektsteckbrief.md
+  - Dokumentation: Dokumentation.md
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+plugins:
+  - search
