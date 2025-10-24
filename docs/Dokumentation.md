@@ -1,6 +1,6 @@
 # Kurzdokumentation – Projekt „Dokumentenmanager“
 
-**Stand:** 15.10.2025  
+**Stand:** 22.10.2025  
 **Team:**  
 - Christian Schweitzer  
 - Raphael Hirschmann  
@@ -86,40 +86,72 @@ In der zweiten Projektwoche wurden große Fortschritte bei Backend, Datenbank un
 - Das Backend wurde um **Login- und Upload-Routen** erweitert.  
 - Verbindung zwischen Backend und Datenbank erfolgreich hergestellt.  
 - Zugriffsschutz ergänzt, sodass nur registrierte Nutzer Dokumente hochladen können.  
-- Beginnt mit der Implementierung des **Passwort-Reset-Systems** und verbessert die Zugriffskontrolle.  
-- Testet aktuell das Dashboard-Template und behebt kleinere Fehler.  
+- Beginn mit der Implementierung des **Passwort-Reset-Systems** und Verbesserung der Zugriffskontrolle.  
+- Test des Dashboard-Templates und Fehlerbehebung.  
 
 ### Raphael Hirschmann
 - Hat die grafische Benutzeroberfläche für **Login und Upload** fertiggestellt.  
 - Nutzer können Dokumente über das Interface hochladen.  
-- Arbeitet an der Anzeige hochgeladener Dateien und am **Light-/Dark-Mode** zur Anpassung der Ansicht.  
-- Ziel ist, dass die Dokumentenliste automatisch aktualisiert wird, sobald neue Dateien hochgeladen wurden.  
+- Arbeitet an der Anzeige hochgeladener Dateien und am **Light-/Dark-Mode**.  
+- Ziel: automatische Aktualisierung der Dokumentenliste bei Uploads.  
 
 ### Cristian Radici
 - Das **logische Datenbankmodell** wurde vollständig umgesetzt und in MariaDB integriert.  
 - Tabellen für Nutzer, Dokumente und Versionierung erfolgreich erstellt und getestet.  
 - Verbindung zwischen Backend und Datenbank eingerichtet.  
-- Beginnt nun mit der **Funktion zur Versionierung von Dokumenten**, sodass ältere Versionen automatisch gespeichert bleiben.  
-- Abstimmung mit Schweitzer über die API-Kommunikation zwischen FastAPI und SQLAlchemy.  
+- Beginn der **Versionierungsfunktion**, um ältere Versionen automatisch zu speichern.  
+- Abstimmung mit Schweitzer über API-Kommunikation zwischen FastAPI und SQLAlchemy.  
 
 ---
 
-## 5. Projektfortschritt bis zum 15.10.2025
+## 5. Weekly 3 – 22.10.2025
+
+In der dritten Woche stand die Systemoptimierung im Fokus.  
+Datenbank, Passwort-Reset und Benutzeroberfläche wurden weiterentwickelt.
+
+### Christian Schweitzer
+- Das **Passwort-Reset-System** läuft stabil, inkl. funktionierendem E-Mail-Versand.  
+- Token-Validierung wurde optimiert (1 Stunde Gültigkeit, einmalige Verwendung).  
+- Erste Tests zur Zeichencodierung und Fehlerbehandlung durchgeführt.  
+- Implementierung der **Audit-Logs** begonnen, um sicherheitsrelevante Aktionen zu protokollieren.  
+- Vorbereitung einer **Passwort-Policy** zur Validierung von Eingaben.  
+- Zusammenarbeit mit Radici zur Tabellenanpassung und mit Hirschmann für UI-Tests.  
+
+### Raphael Hirschmann
+- Die **Reset-UI** für den Passwort-Reset-Prozess wurde erstellt und mit dem Backend verknüpft.  
+- Feedback aus der Review wurde umgesetzt (neues Ticket „Light/Dark-Mode – Anpassung nach Feedback“).  
+- Optimierung von Farbkontrasten, Fokus-Ringen und Hover-Effekten.  
+- Tests der Reset-UI in beiden Themes.  
+- Dokumentation der Änderungen mit Screenshots für das Sprint-Review.  
+- Abstimmung mit Schweitzer zu API-Rückmeldungen (Token-Fehler, Passwort-Policy).  
+
+### Cristian Radici
+- **Datenbankoptimierung** begonnen: neue Indizes für häufige Abfragen erstellt.  
+- **Integrität** der Versionierungstabellen verbessert.  
+- Verbindung zwischen Auth-Tokens und Benutzer-IDs stabilisiert.  
+- Start der Funktion **„Doppelte Dokumente erkennen / löschen“** aus dem Sprint-Backlog.  
+- Analyse potenzieller Konflikte durch Fremdschlüssel und Cascade-Verhalten.  
+- Zusammenarbeit mit Schweitzer (API) und Hirschmann (UI-Handling bei Löschungen).  
+
+---
+
+## 6. Projektfortschritt bis zum 22.10.2025
 
 Bisherige Meilensteine:
-- Projektidee und Zieldefinition abgeschlossen.  
-- MariaDB als Datenbank implementiert und getestet.  
-- Backend-Routen (Login, Upload) funktionsfähig.  
-- GUI für Login und Upload fertiggestellt.  
-- Datenbankmodell und Versionierung vorbereitet.  
-- Zugriffsschutz und Authentifizierung umgesetzt.  
+- Projektidee, Rollenverteilung und Zieldefinition abgeschlossen.  
+- MariaDB-Datenbank erstellt, optimiert und in Nutzung.  
+- Login-, Upload- und Passwort-Reset-System voll funktionsfähig.  
+- Versionierung und Dublettenprüfung in Arbeit.  
+- GUI mit Light-/Dark-Mode implementiert, Reset-UI integriert.  
+- Audit-Logs in Entwicklung.  
+- GitHub-Repositories gepflegt und strukturiert.  
 
 Nächste Schritte:
-- Fertigstellung der Versionierungsfunktion (Radici).  
-- Implementierung des Passwort-Reset-Systems (Schweitzer).  
-- Dynamische Dokumentenanzeige und Light-/Dark-Mode (Hirschmann).  
-- Erste Gesamtintegration von Frontend, Backend und Datenbank.  
+- Abschluss der Audit-Log-Implementierung (Schweitzer).  
+- Finalisierung der Dublettenprüfung & Löschlogik (Radici).  
+- Feinschliff an UI-Elementen, Theme-System und Dokumentenanzeige (Hirschmann).  
+- Integration aller Komponenten für das Sprint-Review am **13. November 2025**.  
 
 ---
 
-*(Weitere Weeklys werden fortlaufend ergänzt – z. B. „Weekly 3 – 22.10.2025“, „Weekly 4 – 29.10.2025“ usw., bis zum Projektabschluss.)*
+*(Weitere Weeklys werden fortlaufend ergänzt – z. B. „Weekly 4 – 29.10.2025“, „Weekly 5 – 05.11.2025“ usw., bis zum Projektabschluss.)*
