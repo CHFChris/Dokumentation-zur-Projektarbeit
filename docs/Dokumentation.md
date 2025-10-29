@@ -135,23 +135,55 @@ Datenbank, Passwort-Reset und Benutzeroberfläche wurden weiterentwickelt.
 
 ---
 
-## 6. Projektfortschritt bis zum 22.10.2025
+## 6. Weekly 4 – 29.10.2025
 
-Bisherige Meilensteine:
-- Projektidee, Rollenverteilung und Zieldefinition abgeschlossen.  
-- MariaDB-Datenbank erstellt, optimiert und in Nutzung.  
-- Login-, Upload- und Passwort-Reset-System voll funktionsfähig.  
-- Versionierung und Dublettenprüfung in Arbeit.  
-- GUI mit Light-/Dark-Mode implementiert, Reset-UI integriert.  
-- Audit-Logs in Entwicklung.  
-- GitHub-Repositories gepflegt und strukturiert.  
+In der vierten Woche lag der Schwerpunkt auf der **Optimierung, Integration und Fehlerbehebung** in allen Systemkomponenten.  
+Das Team arbeitete parallel an Datenbank-Performance, API-Anpassungen, UI-Konsistenz und Sicherheit.
 
-Nächste Schritte:
-- Abschluss der Audit-Log-Implementierung (Schweitzer).  
-- Finalisierung der Dublettenprüfung & Löschlogik (Radici).  
-- Feinschliff an UI-Elementen, Theme-System und Dokumentenanzeige (Hirschmann).  
-- Integration aller Komponenten für das Sprint-Review am **13. November 2025**.  
+### Christian Schweitzer
+- Die **Passwort-Policy** wurde erfolgreich integriert.  
+  Ungültige Eingaben werden nun sofort erkannt und mit klaren Fehlermeldungen behandelt.  
+- **Audit-Logs** wurden vollständig implementiert.  
+  Alle sicherheitsrelevanten Ereignisse (Logins, Passwortänderungen, Uploads) werden nun in der Datenbank erfasst.  
+- Beginn der **Code-Optimierungen im Auth-Bereich**, um Redundanzen zu reduzieren.  
+- Vorbereitung für das Sprint-Review durch gezielte Tests der Log-Funktionen.  
+- Abstimmung mit Radici zur Log-Tabellenstruktur und mit Hirschmann zur Darstellung der Fehler in der Oberfläche.  
+
+### Raphael Hirschmann
+- Die **Reset-UI** wurde vollständig getestet und alle Darstellungsfehler behoben.  
+- Überarbeitung des Designs im **Light-/Dark-Mode**, um Barrierefreiheit und Konsistenz zu gewährleisten.  
+- Verbesserte Rückmeldungen im Reset-Formular: Fehlermeldungen sind jetzt klar und verständlich formuliert.  
+- Vorbereitung von **Screenshots und Notizen** für das bevorstehende Review.  
+- Zusammenarbeit mit Schweitzer für API-Fehlerbehandlung und mit Radici zur konsistenten Darstellung der Rückmeldungen.  
+
+### Cristian Radici
+- Abschluss der **Datenbankoptimierung** mit finaler Prüfung aller Indizes.  
+- Beginn und erfolgreiche Tests der **Funktion zur Dubletten-Erkennung und -Löschung**.  
+- Integration dieser Logik in das bestehende Upload-System vorbereitet.  
+- Analyse der Auswirkungen auf das Datenmodell und Abstimmung mit Schweitzer zur API-Kompatibilität.  
+- Prüfung auf potenzielle Konflikte bei mehrfach referenzierten Versionseinträgen.  
+- Zusammenarbeit mit Hirschmann für korrekte Frontend-Darstellung beim Löschen von Dokumenten.  
 
 ---
 
-*(Weitere Weeklys werden fortlaufend ergänzt – z. B. „Weekly 4 – 29.10.2025“, „Weekly 5 – 05.11.2025“ usw., bis zum Projektabschluss.)*
+## 7. Projektfortschritt bis zum 29.10.2025
+
+### Abgeschlossene Meilensteine
+- Datenbankmodell fertiggestellt und optimiert.  
+- Audit-Log-System vollständig integriert.  
+- Passwort-Policy und Reset-Mechanismus produktiv.  
+- Light-/Dark-Mode fertiggestellt und getestet.  
+- Dublettenprüfung und Löschfunktion implementiert.  
+- GUI und API erfolgreich miteinander verbunden.  
+- GitHub-Repositories und Scrumboard aktuell gepflegt.  
+
+### Nächste Schritte
+- Integration und Endtests der Dublettenlogik (Radici).  
+- Abschluss der Code-Bereinigung im Backend (Schweitzer).  
+- Vorbereitung auf das Sprint-Review (Screenshots, Dokumentation, Testfälle).  
+- Überprüfung der Fehlerstrukturen und UI-Rückmeldungen (Hirschmann).  
+
+---
+
+*(Weitere Weeklys werden fortlaufend ergänzt – z. B. „Weekly 5 – 05.11.2025“, „Weekly 6 – 12.11.2025“ usw., bis zum Projektabschluss.)*
+"""
