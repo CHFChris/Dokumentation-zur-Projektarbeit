@@ -1,16 +1,70 @@
-site_name: Abschlussprojekt Doku
+site_name: Dokumentenmanager
+site_description: Projektdokumentation (Web) – Dokumentenmanager
+site_author: CHFChris
+site_url: https://chfchris.github.io/Dokumentenmanager/
+repo_url: https://github.com/CHFChris/Dokumentenmanager
+repo_name: CHFChris/Dokumentenmanager
+edit_uri: edit/main/docs/
+
 theme:
   name: material
   language: de
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - content.code.copy
+    - search.highlight
+    - search.share
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Dunkelmodus
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Hellmodus
+
 nav:
-  - Start: index.md
-  - Projektsteckbrief: Projektsteckbrief.md
-  - Dokumentation: Dokumentation.md
-markdown_extensions:
-  - admonition
-  - toc:
-      permalink: true
-  - pymdownx.highlight
-  - pymdownx.superfences
+  - Home: index.md
+  - Installation & Quick Start: installation-quickstart.md
+  - Technische Dokumentation:
+      - Architektur: developer/architecture.md
+      - Datenbankmodell: developer/database.md
+      - API-Referenz: developer/api.md
+      - Projektstruktur: developer/file-structure.md
+  - Nutzungshandbuch:
+      - Überblick: user-guide/overview.md
+      - Use-Cases: user-guide/use-cases.md
+      - UI & Screenshots: user-guide/ui-screenshots.md
+      - Beispiel-Daten: user-guide/example-data.md
+  - Technische Strategie: technical-strategy.md
+  - Format & Deliverables: format-deliverables.md
+
 plugins:
   - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+
+extra_javascript:
+  - javascripts/mermaid.js
+
+extra:
+  generator: false
