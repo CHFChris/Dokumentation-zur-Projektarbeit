@@ -1,33 +1,31 @@
 # Installation & Quick Start
 
-Diese Anleitung ist so formuliert, dass eine technisch versierte Person den Dokumentenmanager ohne Rückfragen lokal starten kann.
+Diese Anleitung ist so geschrieben, dass eine technisch versierte Person das Projekt ohne Rückfragen starten kann.
 
 ## Voraussetzungen
 
-### Minimal (Backend + Web-UI)
+### Software
 
 - Git
 - Python 3.11+ (empfohlen 3.12)
-- MariaDB oder MySQL (lokal oder Container)
+- MariaDB oder MySQL (lokal installiert)
+- Node.js 18+ (nur für das optionale Frontend)
 
-### Optional (Frontend)
-
-- Node.js 18+ (npm inklusive)
-
-### Optional (OCR-Features)
+### OCR (optional, aber Feature-relevant)
 
 - Tesseract OCR (System-Binary)
-- Poppler (wird von pdf2image für PDF-OCR genutzt)
+- Poppler (für pdf2image; wird bei PDF-OCR benötigt)
 
-## Schritt-für-Schritt
-
-### 1) Repository klonen
+## Repository klonen
 
 ```bash
 git clone https://github.com/CHFChris/Dokumentenmanager.git
 cd Dokumentenmanager
+```
 
-### 2) Repository klonen
+## Virtuelle Umgebung erstellen und aktivieren
+
+```bash
 python -m venv .venv
 
 # Windows
@@ -35,83 +33,123 @@ python -m venv .venv
 
 # Linux/Mac
 # source .venv/bin/activate
+```
 
-### 3) Dependencies installieren
+## Python-Abhängigkeiten installieren
 
-Primär:
+Aktueller Stand im Repository: Die Datei requirements.txt ist als Notizzeile formatiert und wird von pip nicht zuverlässig als Paketliste gelesen.
+Für einen reproduzierbaren Start wird eine echte requirements.txt benötigt.
 
+### Option A: requirements.txt ersetzen (empfohlen für Reproduzierbarkeit)
+
+Ersetze den Inhalt von requirements.txt durch diese Zeilen:
+
+```text
+fastapi
+uvicorn[standard]
+python-multipart
+jinja2
+sqlalchemy
+alembic
+pymysql
+pydantic>=2
+pydantic-settings
+python-dotenv
+passlib[bcrypt]
+python-jose[cryptography]
+cryptography
+Pillow
+pytesseract
+pdf2image
+pypdf
+python-docx
+email-validator
+scikit-learn
+```
+
+Dann installieren:
+
+```bash
 pip install -r requirements.txt
+```
 
-Hinweis:
-Im aktuellen Repo ist requirements.txt als kommentierte Checkliste formatiert. Wenn pip nichts installiert, installiere die Mindestpakete manuell (siehe unten).
+### Option B: Direkt installieren (wenn requirements.txt unverändert bleibt)
 
-Mindestpakete (Backend + OCR + DB):
+```bash
+pip install fastapi uvicorn[standard] python-multipart jinja2 sqlalchemy alembic pymysql pydantic>=2 pydantic-settings python-dotenv passlib[bcrypt] python-jose[cryptography] cryptography Pillow pytesseract pdf2image pypdf python-docx email-validator scikit-learn
+```
 
-pip install fastapi uvicorn[standard] python-multipart jinja2 sqlalchemy alembic pymysql pydantic-settings python-dotenv cryptography PyJWT passlib[argon2] pillow pytesseract pdf2image pypdf python-docx email-validator
-### 4) .env anlegen
+## Datenbank vorbereiten
 
-Im Repo-Root eine Datei .env erstellen:
+MariaDB/MySQL: Datenbank und Nutzer anlegen (Beispiel):
 
+```sql
+CREATE DATABASE dokumentenmanager CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'dm'@'localhost' IDENTIFIED BY 'dm_password';
+GRANT ALL PRIVILEGES ON dokumentenmanager.* TO 'dm'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+## .env anlegen (Pflicht)
+
+Wichtig: Die Settings erlauben nur bekannte Variablen. Zusätzliche Keys in der .env können den Start verhindern.
+
+Datei .env im Projekt-Root erstellen:
+
+```dotenv
 APP_ENV=development
 PUBLIC_BASE_URL=http://127.0.0.1:8000
 
 SECRET_KEY=CHANGE_ME_MIN_16_CHARS
-FILES_FERNET_KEY=CHANGE_ME_FERNET_BASE64
-
 DB_URL=mysql+pymysql://dm:dm_password@127.0.0.1:3306/dokumentenmanager?charset=utf8mb4
 
-FILES_DIR=./data/files
-MAX_UPLOAD_MB=50
+FILES_FERNET_KEY=CHANGE_ME_FERNET_KEY
 
 MAIL_FROM=no-reply@example.org
 MAIL_FROM_NAME=Dokumentenmanager
 MAIL_SERVER=127.0.0.1
 MAIL_PORT=1025
-MAIL_USERNAME=
-MAIL_PASSWORD=
 MAIL_USE_TLS=false
+```
 
-Sicherheitsrelevant:
+Fernet-Key generieren:
 
-.env nicht committen.
+```bash
+python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+```
 
-SECRET_KEY und FILES_FERNET_KEY sind Geheimnisse.
+## Migrationen ausführen (Pflicht)
 
-### 5) Datenbank initialisieren (Alembic)
+Alembic nutzt die DB_URL aus der .env.
 
-Einmalig ausführen:
-
+```bash
 alembic upgrade head
+```
 
-Wenn das fehlschlägt:
+## Backend starten
 
-DB nicht erreichbar oder DB_URL falsch.
-
-### 6) Backend starten
+```bash
 python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
 
-Danach:
+Danach erreichbar:
 
-Web-UI: http://127.0.0.1:8000/
- (Redirect auf /dashboard)
+- Web-UI: http://127.0.0.1:8000/ (Redirect auf /dashboard)
+- Swagger: http://127.0.0.1:8000/docs
+- OpenAPI JSON: http://127.0.0.1:8000/openapi.json
 
-Swagger: http://127.0.0.1:8000/docs
+## Frontend starten (optional)
 
-### 7) Frontend starten (optional)
+```bash
 cd dokumentenmanager_frontend
-npm install
+npm ci || npm install
 npm run dev -- --port 5173
+```
 
 Frontend:
 
-http://127.0.0.1:5173/
+- http://127.0.0.1:5173/
 
-Windows Shortcut: start_project.bat
+## Windows-Shortcut
 
-Unter Windows kann start_project.bat Backend und Frontend in getrennten Fenstern starten (inklusive npm install beim ersten Mal).
-
-Voraussetzung:
-
-DB erreichbar
-
-Migrationen mindestens einmal angewendet (alembic upgrade head)
+start_project.bat startet Backend und Frontend in getrennten Fenstern und zeigt die URLs im Terminal an.

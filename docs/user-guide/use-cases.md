@@ -1,27 +1,28 @@
 # Nutzungshandbuch – Use-Cases
 
-## Use-Case 1: Dokument hochladen und finden
+## Use-Case 1: Dokument hochladen und wiederfinden
 
 1. Einloggen.
-2. /upload oeffnen.
+2. /upload öffnen.
 3. Datei hochladen.
-4. /documents pruefen.
+4. /documents prüfen.
 5. /search nutzen (Dateiname oder OCR-Text).
 
 ## Use-Case 2: Kategorien und Keywords pflegen
 
-1. /category-keywords oeffnen.
-2. Kategorie erstellen oder bearbeiten.
-3. Keywords eintragen, um Ablage/Suche zu verbessern.
+1. /category-keywords öffnen.
+2. Kategorie anlegen oder bearbeiten.
+3. Keywords ergänzen, um Suche und automatische Vorschläge zu verbessern.
 
-## Use-Case 3: Versionierung nutzen
+## Use-Case 3: OCR prüfen (Debug)
 
-1. Dokumentdetails /documents/{id} oeffnen.
-2. Versionen /documents/{id}/versions oeffnen.
-3. Alte Versionen vergleichen und bei Bedarf wiederherstellen.
+1. Swagger öffnen: /docs
+2. Endpoint POST /debug-ocr/test auswählen
+3. Datei hochladen (PDF/Bild/DOCX)
+4. preview prüfen
 
 ## Use-Case 4: Papierkorb
 
-1. Dokument loeschen (Soft-Delete).
-2. /trash oeffnen.
-3. Wiederherstellen oder endgueltig loeschen.
+1. Dokument löschen (Soft-Delete).
+2. /trash öffnen.
+3. Wiederherstellen oder endgültig löschen (Retention läuft automatisch im Hintergrund).

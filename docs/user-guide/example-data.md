@@ -1,17 +1,14 @@
 # Nutzungshandbuch – Beispieldaten
 
-## Test-Accounts (Vorschlag)
+## Test-Account (Demo)
 
 | Account | Passwort | Zweck |
 |---|---|---|
 | demo@example.org | Demo!1234 | Standarddemo für Präsentation |
 
-## Beispiel-Dokumente (Vorschlag)
+## Beispiel-Dokumente
 
-- sample-invoice.pdf (Rechnung)
-- sample-contract.pdf (Vertrag)
-- sample-photo.jpg (Foto/Scan)
-- sample-letter.docx (Schreiben)
-
-Hinweis:
-Für eine Demo reichen 6–10 Dateien, die unterschiedliche OCR-Qualität abdecken (sauberer Druck vs. Foto mit Schatten).
+- sample-invoice.pdf (klarer Druck, OCR gut)
+- sample-contract.pdf (mehrseitig, OCR mittel)
+- sample-photo.jpg (Foto mit Schatten, OCR schwierig)
+- sample-scan.png (Scan, OCR gut)

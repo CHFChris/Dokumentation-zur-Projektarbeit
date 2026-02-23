@@ -1,28 +1,40 @@
-# Installation & Quick Start
+# Technische Dokumentation – Architektur
 
-Diese Anleitung ist so geschrieben, dass eine technisch versierte Person das Projekt **ohne Rückfragen** lokal oder via Docker starten kann.
+## Systemüberblick
 
-## Voraussetzungen
+Der Dokumentenmanager ist eine Webanwendung mit FastAPI. Die Web-UI wird serverseitig über Jinja2-Templates gerendert, zusätzlich existieren JSON-Endpunkte (Swagger unter /docs). Beim Start werden die ORM-Modelle geladen und ein Hintergrundtask bereinigt regelmäßig den Papierkorb.
 
-### Minimal (Backend + DB)
+## Komponenten (C4 Level 2)
 
-- Python **3.11+** (empfohlen 3.12)
-- MariaDB/MySQL (oder Docker)
-- Node.js **18+** nur falls das React‑Frontend genutzt wird
-- Git
+```mermaid
+flowchart LR
+  U[Benutzer: Browser] -->|HTTP| BE[FastAPI Backend\nWeb-UI (Jinja2) + JSON API]
+  BE -->|SQLAlchemy| DB[(MariaDB/MySQL)]
+  BE -->|Fernet| FS[(Dateisystem: FILES_DIR)]
+  BE -->|SMTP| SMTP[(Mail Server)]
+  BE -->|OCR| OCR[Tesseract + pdf2image + pypdf]
+  BE -->|Background Task| TR[Trash Cleanup]
+```
 
-### OCR (optional, aber Feature‑kritisch)
+## Relevante Module im Backend
 
-- **Tesseract OCR** (System‑Binary)
-- **Poppler** / `poppler-utils` (für `pdf2image` PDF→Bild)
+- app/main.py: App-Setup, Router-Einbindung, Redirect von / auf /dashboard, HTML-Redirect bei 401 auf /auth/login-web
+- app/web/routes_web.py: Web-Routen (Dashboard, Upload, Suche, Kategorien/Keywords, Dokumente, Papierkorb)
+- app/api/routes/auth.py: Register/Login, Verifikation und optionaler MFA-Flow
+- app/api/routes/debug_ocr.py: OCR-Testendpoint für PDF/Bild/DOCX
 
-## Schnellstart mit Docker Compose (empfohlen)
+## Datenfluss: Upload und Speicherung (vereinfacht)
 
-```bash
-git clone https://github.com/CHFChris/Dokumentenmanager.git
-cd Dokumentenmanager
+1. Upload über Web-UI oder API (multipart)
+2. Datei-Stream wird gespeichert und als Bytes verschlüsselt abgelegt (Fernet)
+3. Integritäts-Tag (HMAC-SHA256) wird berechnet und gespeichert
+4. OCR wird je nach Dateityp ausgeführt (PDF: Text-Layer, sonst OCR; Bild: OCR; DOCX: Text-Extraktion)
+5. OCR-Text wird verschlüsselt in der DB gespeichert und für Suche/Ranking entschlüsselt verwendet
 
-cp .env.example .env
-# .env: SECRET_KEY, FILES_FERNET_KEY, DB_URL prüfen/anpassen
+## Security (konkret)
 
-docker compose up --build
+- JWT Bearer (global in OpenAPI als BearerAuth gesetzt)
+- Web-Login setzt access_token als HttpOnly-Cookie
+- E-Mail-Verifikation wird vor Token-Issuance geprüft
+- Optionaler MFA-Flow per E-Mail-Code (Challenge-ID + Verify)
+- Dateien und OCR-Texte werden verschlüsselt gespeichert

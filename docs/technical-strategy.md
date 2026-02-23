@@ -2,27 +2,33 @@
 
 ## Technologie-Stack
 
-| Bereich | Auswahl | Grund |
+| Bereich | Auswahl | Begründung |
 |---|---|---|
-| Backend | FastAPI | schnelle Entwicklung, Swagger/OpenAPI |
-| ORM/Migrationen | SQLAlchemy + Alembic | Wartbarkeit, Schema-Entwicklung |
-| Datenbank | MariaDB/MySQL | stabil, verbreitet, Setup-freundlich |
-| Web-UI | Jinja2 | reproduzierbar, robust fuer Bewertung |
-| Frontend (optional) | Vite/React | moderne UI moeglich |
-| OCR | Tesseract + pdf2image/Poppler | offline, keine laufenden Kosten |
-| Security | Argon2id, JWT, Fernet | zeitgemaess, nachvollziehbar |
-
-## Trade-offs
-
-- Cloud-OCR waere oft besser in der Erkennung, ist aber kostenpflichtig und datenschutzkritisch.
-- Nur-SPA waere moeglich, erhoeht aber Integrationsaufwand (Auth, CORS, Deployment).
+| Backend | FastAPI | schnelle API-Entwicklung, integrierte OpenAPI/Swagger-Doku |
+| ORM/Migrationen | SQLAlchemy + Alembic | Wartbarkeit, Schema-Entwicklung, Migrationen |
+| Datenbank | MariaDB/MySQL | verbreitet, stabil, geeignet für CRUD-lastige Systeme |
+| Web-UI | Jinja2 | reproduzierbar, wenig Client-Komplexität |
+| Frontend (optional) | Vite/React | moderne UI möglich, getrennte Entwicklung |
+| OCR | Tesseract + pdf2image + pypdf | offline, keine laufenden Kosten, PDF-Textlayer zuerst |
+| Security | JWT + HttpOnly-Cookie + Fernet | nachvollziehbare Schutzmechanismen, Verschlüsselung at rest |
 
 ## Skalierbarkeit
 
-- OCR und Bereinigung (Papierkorb) sind Kandidaten fuer Worker/Queues.
-- Modultrennung Router -> Services -> Repositories erleichtert Erweiterungen.
+- OCR und Papierkorb-Bereinigung sind Kandidaten für Worker/Queues.
+- Klare Trennung Router -> Services -> Repositories erleichtert Erweiterungen.
 
-## Workarounds
+## Wartbarkeit
 
-- mysqlclient ist unter Windows manchmal hakelig: pymysql ueber DB_URL=mysql+pymysql://...
-- OCR ist abhaengig von Systemtools: klare Installationshinweise und Betrieb ohne OCR weiterhin moeglich.
+- Zentrale Settings über .env, strikt validiert (nur erlaubte Keys).
+- Migrationen über Alembic statt manueller SQL-Skripte.
+
+## Performance
+
+- OCR ist der teuerste Schritt; PDF-Textlayer wird zuerst genutzt.
+- Suche nutzt entschlüsselten OCR-Text zur Laufzeit; gespeicherte Werte bleiben verschlüsselt.
+
+## Bekannte Stolperstellen und Lösungen
+
+- requirements.txt ist aktuell nicht pip-kompatibel: echte Paketliste bereitstellen (siehe Installation).
+- .env darf keine unbekannten Variablen enthalten, sonst schlägt der Start fehl.
+- OCR benötigt Systemtools; ohne Tesseract/Poppler laufen Kernfunktionen weiterhin, OCR-Features sind dann eingeschränkt.
