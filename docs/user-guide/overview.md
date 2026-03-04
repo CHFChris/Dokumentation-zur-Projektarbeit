@@ -2,19 +2,24 @@
 
 ## Einstieg (Web-UI)
 
-- /dashboard
-- /upload
-- /documents (Liste)
-- /search (Volltextsuche)
-- /category-keywords (Kategorien + Keywords)
-- /favorites
-- /trash
+Nach dem Start des Backends:
+- Root: `/` leitet auf `/dashboard` um
+- API-Dokumentation: `/docs`
 
 ## Hauptfunktionen
 
-- Registrierung und Login; Web-Login setzt ein HttpOnly-Cookie (access_token)
-- E-Mail-Verifikation; optionaler MFA-Flow per Code
-- Upload, Download, Umbenennen, Löschen (Soft-Delete in Papierkorb)
-- OCR für PDF/Bild/DOCX und Volltextsuche über extrahierten Text
-- Kategorien/Keywords zur Strukturierung und als Basis für Vorschläge
-- Versionierung von Dokumenten
+- Registrierung/Login mit E-Mail-Verifikation, optional MFA per E-Mail-Code
+- Upload und sichere Speicherung (Dateien verschlüsselt)
+- OCR (Bilder/PDFs/DOCX) und Volltextsuche
+- Kategorien und Keywords (inkl. Vorschläge und Auto-Tagging, best effort)
+- Versionierung
+- Favoriten
+- Papierkorb (Soft-Delete) mit automatischer Bereinigung
+
+## Typischer Workflow
+
+1. Login
+2. Dokument hochladen und Kategorie zuweisen
+3. Über Suche (Dateiname + OCR) wiederfinden
+4. Optional: Favorit setzen
+5. Bei Fehlern: Papierkorb nutzen (Restore)

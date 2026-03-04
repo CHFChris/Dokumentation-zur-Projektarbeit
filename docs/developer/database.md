@@ -2,11 +2,11 @@
 
 ## Überblick
 
-Die Anwendung nutzt SQLAlchemy (ORM) und Alembic (Migrationen). Die Verbindung wird über DB_URL aus der .env konfiguriert.
+Die Anwendung nutzt SQLAlchemy (ORM) und Alembic (Migrationen). Die Verbindung wird über `DB_URL` aus der `.env` konfiguriert.
 
 ## Importierte Modelle (Ist-Zustand)
 
-Beim Start werden diese Modelle geladen:
+Beim Start werden u. a. diese Modelle geladen:
 
 - User
 - Category
@@ -34,7 +34,8 @@ erDiagram
 
 ## Konsistenzregeln
 
-- Fremdschlüsseltypen konsistent halten (z. B. user_id überall BIGINT oder überall INT).
+- Fremdschlüsseltypen konsistent halten (z. B. `user_id` überall `BIGINT` oder überall `INT`).
+- Kategorien sind benutzerbezogen: Kategorien eines Users sollen nicht in andere Accounts "leaken".
 - Soft-Delete über Flag (Papierkorb) statt physischem Löschen; endgültiges Löschen erfolgt zeitgesteuert (Retention).
 
 ## Migrationen (Pflichtschritt)

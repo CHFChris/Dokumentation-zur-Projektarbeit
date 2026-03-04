@@ -1,0 +1,30 @@
+/* Dokumentenmanager 2026 - Doku Styling (Material) */
+
+.md-typeset p { line-height: 1.75; }
+
+/* Screenshot-Style: groß, klar, einheitlich */
+.md-typeset img.screenshot{
+  display:block;
+  width:100%;
+  max-width:1150px;
+  margin:0.9rem auto 1.4rem auto;
+  border-radius:14px;
+  box-shadow:0 14px 40px rgba(0,0,0,0.18);
+}
+
+/* Logo nicht aufblasen */
+.md-typeset img.logo{
+  width:120px;
+  max-width:120px;
+  margin:0.2rem 0 1.0rem 0;
+  box-shadow:none;
+}
+
+/* Tabellen lesbar */
+.md-typeset table:not([class]) th { white-space: nowrap; }
+
+/* Admonitions runder */
+.md-typeset .admonition,
+.md-typeset details{
+  border-radius:14px;
+}

@@ -1,29 +1,37 @@
-site_name: Dokumentenmanager
-site_description: Projektdokumentation (Web) – Dokumentenmanager
-site_author: CHFChris
-site_url: https://chfchris.github.io/Dokumentenmanager/
-repo_url: https://github.com/CHFChris/Dokumentenmanager
-repo_name: CHFChris/Dokumentenmanager
+site_name: Dokumentenmanager 2026
+site_description: Projektdokumentation (Web) - Dokumentenmanager 2026
+site_author: Projektteam Dokumentenmanager (RDF)
+site_url: https://chfchris.github.io/Dokumentation-zur-Projektarbeit/
+
+repo_url: https://github.com/CHFChris/Dokumentation-zur-Projektarbeit
+repo_name: CHFChris/Dokumentation-zur-Projektarbeit
 edit_uri: edit/main/docs/
 
 theme:
   name: material
   language: de
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
   features:
     - navigation.instant
     - navigation.tracking
     - navigation.top
     - content.code.copy
+    - content.action.edit
     - search.highlight
     - search.share
   icon:
     repo: fontawesome/brands/github
   palette:
     - scheme: default
+      primary: black
+      accent: indigo
       toggle:
         icon: material/weather-night
         name: Dunkelmodus
     - scheme: slate
+      primary: black
+      accent: indigo
       toggle:
         icon: material/weather-sunny
         name: Hellmodus
@@ -40,9 +48,10 @@ nav:
       - Überblick: user-guide/overview.md
       - Use-Cases: user-guide/use-cases.md
       - UI & Screenshots: user-guide/ui-screenshots.md
+      - UI-Mockups (optional): user-guide/ui-mockups.md
       - Beispiel-Daten: user-guide/example-data.md
   - Technische Strategie: technical-strategy.md
-  - Format & Deliverables: format-deliverables.md
+  - Format & Abgabe: format-deliverables.md
 
 plugins:
   - search
@@ -66,8 +75,8 @@ markdown_extensions:
 extra_javascript:
   - javascripts/mermaid.js
 
-extra:
-  generator: false
-
 extra_css:
   - stylesheets/extra.css
+
+extra:
+  generator: false

@@ -2,9 +2,9 @@
 
 ## Systemüberblick
 
-Der Dokumentenmanager ist eine Webanwendung mit FastAPI. Die Web-UI wird serverseitig über Jinja2-Templates gerendert, zusätzlich existieren JSON-Endpunkte (Swagger unter /docs). Beim Start werden die ORM-Modelle geladen und ein Hintergrundtask bereinigt regelmäßig den Papierkorb.
+Der Dokumentenmanager ist eine Webanwendung mit FastAPI. Die Web-UI wird serverseitig über Jinja2-Templates gerendert, zusätzlich existieren JSON-Endpunkte (Swagger unter `/docs`). Beim Start werden die ORM-Modelle initialisiert und ein Hintergrundtask bereinigt regelmäßig den Papierkorb.
 
-## Komponenten (C4 Level 2)
+## Architekturdiagramm v1 (Ist-Stand)
 
 ```mermaid
 flowchart LR
@@ -16,25 +16,57 @@ flowchart LR
   BE -->|Background Task| TR[Trash Cleanup]
 ```
 
+## Architekturdiagramm v2 (überarbeitet)
+
+Ziel der Überarbeitung: klare Trennung zwischen Web-UI, API und Hintergrundarbeit (OCR/Retention), damit Wartbarkeit und spätere Skalierung nachvollziehbar werden.
+
+```mermaid
+flowchart TB
+  subgraph Client
+    U[Browser]
+  end
+
+  subgraph Backend
+    WEB[Web-UI Router\nHTML/Jinja2]
+    API[JSON Router\nOpenAPI /docs]
+    TASKS[Background Tasks\nOCR + Purge]
+  end
+
+  subgraph Storage
+    DB[(MariaDB/MySQL)]
+    FS[(Files Directory)]
+    SMTP[(SMTP)]
+  end
+
+  U --> WEB
+  U --> API
+  WEB --> DB
+  API --> DB
+  API --> FS
+  API --> SMTP
+  TASKS --> DB
+  TASKS --> FS
+```
+
 ## Relevante Module im Backend
 
-- app/main.py: App-Setup, Router-Einbindung, Redirect von / auf /dashboard, HTML-Redirect bei 401 auf /auth/login-web
-- app/web/routes_web.py: Web-Routen (Dashboard, Upload, Suche, Kategorien/Keywords, Dokumente, Papierkorb)
-- app/api/routes/auth.py: Register/Login, Verifikation und optionaler MFA-Flow
-- app/api/routes/debug_ocr.py: OCR-Testendpoint für PDF/Bild/DOCX
+- `app/main.py`: App-Setup, Router-Einbindung, Redirect von `/` auf `/dashboard`, Middleware-Redirect bei 401 (HTML) auf `/auth/login-web`.
+- `app/web/routes_web.py`: Web-Routen (Dashboard, Upload, Suche, Kategorien/Keywords, Dokumente, Papierkorb, Favoriten).
+- `app/api/routes/auth.py`: Register/Login, Verifikation und optionaler MFA-Flow.
+- `app/api/routes/debug_ocr.py`: OCR-Testendpoint für PDF/Bild/DOCX.
 
 ## Datenfluss: Upload und Speicherung (vereinfacht)
 
 1. Upload über Web-UI oder API (multipart)
 2. Datei-Stream wird gespeichert und als Bytes verschlüsselt abgelegt (Fernet)
-3. Integritäts-Tag (HMAC-SHA256) wird berechnet und gespeichert
+3. Integritäts-Tag (HMAC) und SHA256 werden zur Duplikatprüfung genutzt
 4. OCR wird je nach Dateityp ausgeführt (PDF: Text-Layer, sonst OCR; Bild: OCR; DOCX: Text-Extraktion)
 5. OCR-Text wird verschlüsselt in der DB gespeichert und für Suche/Ranking entschlüsselt verwendet
 
 ## Security (konkret)
 
-- JWT Bearer (global in OpenAPI als BearerAuth gesetzt)
-- Web-Login setzt access_token als HttpOnly-Cookie
-- E-Mail-Verifikation wird vor Token-Issuance geprüft
-- Optionaler MFA-Flow per E-Mail-Code (Challenge-ID + Verify)
-- Dateien und OCR-Texte werden verschlüsselt gespeichert
+- OpenAPI beschreibt global ein Bearer-Schema (JWT).
+- Web-Login setzt `access_token` als HttpOnly-Cookie.
+- E-Mail-Verifikation wird vor Freischaltung des Kontos geprüft.
+- Optionaler MFA-Flow per E-Mail-Code (Challenge-ID + Verify).
+- Dateien und OCR-Texte werden verschlüsselt gespeichert.
