@@ -1,7 +1,10 @@
 (function () {
   const init = () => {
     if (!window.mermaid) return;
-    window.mermaid.initialize({ startOnLoad: true, theme: "default" });
+    window.mermaid.initialize({
+      startOnLoad: true,
+      theme: "default",
+    });
   };
 
   const script = document.createElement("script");

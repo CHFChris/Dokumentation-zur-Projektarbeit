@@ -1,28 +1,18 @@
-# Nutzungshandbuch – UI-Mockups
+# UI-Mockups
 
-Die folgenden Mockups dienen als Orientierung, falls noch nicht alle Screenshots vorhanden sind.
+Neben realen Screenshots können Mockups sinnvoll sein, um geplante Weiterentwicklungen oder alternative Ansichten zu kommunizieren. Während Screenshots den aktuellen Stand dokumentieren, helfen Mockups dabei, Designabsichten und zukünftige UX-Verbesserungen zu verdeutlichen.
 
-## Dashboard (Wireframe)
+## Zweck von Mockups im Projektkontext
 
-```text
-+------------------------------------------------------+
-| Dokumentenmanager                                    |
-| [Upload] [Dokumente] [Suche] [Kategorien] [Profil]   |
-+------------------------------------------------------+
-| Übersicht: Dokumente | Speicher | Favoriten | Trash  |
-+------------------------------------------------------+
-| Letzte Uploads / Favoriten / Hinweise                |
-+------------------------------------------------------+
-```
+Mockups zeigen, dass Benutzerführung und visuelle Struktur nicht zufällig entstehen. Gerade im Rahmen einer Projektarbeit ist es wichtig nachzuweisen, dass Oberflächen nicht nur implementiert, sondern auch konzeptionell gedacht wurden. Selbst wenn nicht jedes Mockup vollständig umgesetzt wurde, dokumentieren sie gestalterische Entscheidungen und zukünftige Potenziale.
 
-## Dokumentliste (Wireframe)
+## Typische Einsatzfelder
 
-```text
-+------------------------------------------------------+
-| Dokumente                                             |
-| Suche: [__________]  Filter: [Kategorie v] [Favorit] |
-+------------------------------------------------------+
-| Name        | Kategorien | Datum       | Aktionen    |
-| invoice.pdf | Finanzen   | 2026-02-20  | Öffnen ...  |
-+------------------------------------------------------+
-```
+- alternative Dashboard-Anordnung
+- verbesserte Such- und Filterführung
+- klarere Dokumentdetailansicht
+- visuell stärkere Hervorhebung von Duplikatfällen oder Papierkorbzuständen
+
+## Fachlicher Mehrwert
+
+Mockups sind besonders dann wertvoll, wenn sie begründen, warum die reale UI so gestaltet wurde oder an welcher Stelle eine spätere Optimierung geplant ist. Damit entsteht eine Brücke zwischen Ist-Stand und Produktvision.

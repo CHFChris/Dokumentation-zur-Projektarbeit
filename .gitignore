@@ -1,15 +1,5 @@
-# Python
-.venv/
-venv/
-__pycache__/
-*.pyc
-
-# MkDocs build output
 site/
-
-# Secrets
+.venv/
+__pycache__/
 .env
-
-# OS
 .DS_Store
-Thumbs.db

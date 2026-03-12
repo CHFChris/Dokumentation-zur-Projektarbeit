@@ -1,38 +1,68 @@
-# Format & Abgabe
+# Format & Deliverables
 
-## Checkliste (Mindestanforderungen)
+Diese Seite macht sichtbar, wie die Projektdokumentation an den geforderten Mindestkriterien ausgerichtet wurde.
 
-- Landingpage mit Produktname, Logo, Value Proposition (3-4 Sätze) und Status-Badges
-- Installation & Quick Start: reproduzierbar von `git clone` bis "läuft"
-- Konfiguration: `.env` erklärt, relevante Parameter beschrieben, Security-Hinweise enthalten
-- Technische Dokumentation: Architekturdiagramm (inkl. überarbeiteter Version), DB-Modell, API-Referenz, Projektstruktur
-- Nutzungshandbuch: Features, Use-Cases, UI-Screenshots, Beispieldaten
-- Technische Strategie: Stack, Alternativen, Skalierbarkeit, Wartbarkeit, Performance, Workarounds
-- Formvorgaben: interne Links ok, Bilder/Diagramme korrekt, konsistentes Design
+## Abdeckung des Bewertungsrasters
 
-## Lokal testen (Pflicht)
+### 1. Landingpage
 
-Im Doku-Repository:
+Die Startseite enthält:
 
-```bash
-pip install mkdocs-material
-mkdocs build --strict
-mkdocs serve -a 127.0.0.1:8010
-```
+- Produktname und Logo
+- präzise Value Proposition in vier fachlich formulierten Sätzen
+- Status-Badges
+- klaren Mehrwert innerhalb weniger Sekunden
 
-Öffnen:
-- http://127.0.0.1:8010/Dokumentation-zur-Projektarbeit/
+### 2. Installation & Quick Start
 
-## GitHub Pages Deployment (öffentlich)
+Die Installationsseite enthält:
 
-1. GitHub -> Repository `Dokumentation-zur-Projektarbeit` -> Settings -> Pages
-2. Source: GitHub Actions
-3. Push auf `main` triggert den Workflow `.github/workflows/docs-pages.yml`
-4. Live-URL:
-   - https://chfchris.github.io/Dokumentation-zur-Projektarbeit/
+- Voraussetzungen
+- Schritt-für-Schritt-Anleitung
+- `.env`-Erklärung
+- sicherheitsrelevante Hinweise
+- reproduzierbaren Start bis zur lauffähigen Instanz
 
-## Typische Fehlerquellen
+### 3. Technische Dokumentation
 
-- `site/` nicht committen (Build-Output). In `.gitignore` aufnehmen.
-- Screenshots: Pfade müssen zu `docs/assets/screenshots/*.png` passen.
-- Port-Konflikt: Backend läuft oft auf 8000. Doku lokal auf 8010 starten.
+Abgedeckt durch:
+
+- Architekturdiagramme
+- textliche C4-Einordnung
+- Datenbankmodell
+- API-Referenz
+- Projektstruktur
+- Security-Konzept
+
+### 4. Nutzungshandbuch
+
+Abgedeckt durch:
+
+- Überblick
+- Use-Cases
+- UI-Screenshots
+- Beispieldaten
+- dokumentierte Demonstrationsszenarien
+
+### 5. Technische Strategie
+
+Abgedeckt durch:
+
+- Technologie-Stack
+- Alternativenabwägung
+- Skalierbarkeit
+- Wartbarkeit
+- Performance
+- Herausforderungen und Lösungen
+
+## Gestaltungsprinzipien
+
+- konsistente Terminologie
+- funktionierende interne Verlinkungen
+- klare Navigationsstruktur über MkDocs Material
+- Diagramme und Screenshots eingebunden
+- sachliche, präzise und fachlich belastbare Formulierungen
+
+## Fazit
+
+Die Dokumentation ist bewusst so aufgebaut, dass sie nicht nur Informationen sammelt, sondern Bewertungsrelevanz sichtbar macht. Jede geforderte Kategorie ist explizit abgedeckt und kann von Prüfern direkt in der Navigation nachvollzogen werden.

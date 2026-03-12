@@ -1,37 +1,42 @@
-site_name: Dokumentenmanager 2026
-site_description: Projektdokumentation (Web) - Dokumentenmanager 2026
-site_author: Projektteam Dokumentenmanager (RDF)
+site_name: Dokumentenmanager
+site_description: Hochwertige Web-Projektdokumentation zum Dokumentenmanager
+site_author: Christian Schweitzer, Cristian Radici, Raphael Hirschmann
 site_url: https://chfchris.github.io/Dokumentation-zur-Projektarbeit/
 
 repo_url: https://github.com/CHFChris/Dokumentation-zur-Projektarbeit
 repo_name: CHFChris/Dokumentation-zur-Projektarbeit
 edit_uri: edit/main/docs/
 
+dev_addr: 127.0.0.1:8010
+
 theme:
   name: material
   language: de
-  logo: assets/logo.svg
-  favicon: assets/logo.svg
+  logo: assets/logo.jpg
+  favicon: assets/logo.jpg
   features:
     - navigation.instant
     - navigation.tracking
     - navigation.top
+    - navigation.sections
+    - navigation.expand
     - content.code.copy
     - content.action.edit
     - search.highlight
     - search.share
+    - toc.follow
   icon:
     repo: fontawesome/brands/github
   palette:
     - scheme: default
       primary: black
-      accent: indigo
+      accent: amber
       toggle:
         icon: material/weather-night
         name: Dunkelmodus
     - scheme: slate
       primary: black
-      accent: indigo
+      accent: blue
       toggle:
         icon: material/weather-sunny
         name: Hellmodus
@@ -39,19 +44,22 @@ theme:
 nav:
   - Home: index.md
   - Installation & Quick Start: installation-quickstart.md
+  - Betrieb & Deployment: operations.md
   - Technische Dokumentation:
       - Architektur: developer/architecture.md
       - Datenbankmodell: developer/database.md
       - API-Referenz: developer/api.md
       - Projektstruktur: developer/file-structure.md
+      - Security-Konzept: developer/security.md
   - Nutzungshandbuch:
       - Überblick: user-guide/overview.md
       - Use-Cases: user-guide/use-cases.md
-      - UI & Screenshots: user-guide/ui-screenshots.md
-      - UI-Mockups (optional): user-guide/ui-mockups.md
+      - UI-Screenshots: user-guide/ui-screenshots.md
       - Beispiel-Daten: user-guide/example-data.md
+      - UI-Mockups: user-guide/ui-mockups.md
   - Technische Strategie: technical-strategy.md
-  - Format & Abgabe: format-deliverables.md
+  - Projektinfo: project-info.md
+  - Format & Deliverables: format-deliverables.md
 
 plugins:
   - search
@@ -72,11 +80,11 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
 
-extra_javascript:
-  - javascripts/mermaid.js
-
 extra_css:
   - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/mermaid.js
 
 extra:
   generator: false

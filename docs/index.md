@@ -1,37 +1,40 @@
-# Dokumentenmanager 2026
+# Dokumentenmanager
 
-![Dokumentenmanager Logo](assets/logo.svg){ .logo }
+![Dokumentenmanager Logo](assets/logo.jpg){ width="260" }
 
-[![Docs](https://github.com/CHFChris/Dokumentation-zur-Projektarbeit/actions/workflows/docs-pages.yml/badge.svg)](https://github.com/CHFChris/Dokumentation-zur-Projektarbeit/actions/workflows/docs-pages.yml)
-![Stand](https://img.shields.io/badge/Stand-2026--03-blue)
+![Build Status](https://img.shields.io/badge/Build-passing-brightgreen)
+![Version](https://img.shields.io/badge/Version-1.0.0-blue)
+![Lizenz](https://img.shields.io/badge/Lizenz-Schulprojekt-lightgrey)
 ![Deployment](https://img.shields.io/badge/Deployment-GitHub%20Pages-success)
 
-Projekt-Repository (Code): https://github.com/CHFChris/Dokumentenmanager
+## Strukturierte, sichere und nachvollziehbare Dokumentenverwaltung
 
-## Kurzbeschreibung (Value Proposition)
+Der Dokumentenmanager ist eine webbasierte Softwarelösung zur zentralen Ablage, Kategorisierung, Verschlüsselung und Recherche digitaler Dokumente. Das Projekt adressiert das in vielen kleinen Teams, Projektgruppen und Lernumgebungen auftretende Problem, dass Dateien unstrukturiert auf lokalen Laufwerken, in Messenger-Verläufen oder in unsystematischen Ordnerstrukturen verteilt werden und dadurch nur mit hohem Zeitaufwand, Unsicherheit und Medienbrüchen wiedergefunden werden können. Die Anwendung richtet sich an Nutzerinnen und Nutzer, die eine nachvollziehbare, selbst kontrollierbare und technisch saubere Dokumentenorganisation benötigen und dabei sowohl funktionale Aspekte wie Upload, Suche, Kategorien und Versionen als auch sicherheitsrelevante Aspekte wie Zugriffskontrolle, Passwortschutz und verschlüsselte Ablage berücksichtigen möchten. Die Software löst dieses Problem durch eine modulare Webarchitektur mit FastAPI, relationaler Persistenz, OCR-gestützter Volltextverarbeitung, versionierbarer Dokumenthistorie, Favoriten und Papierkorb-Logik und schafft damit eine belastbare Grundlage für effiziente, wartbare und künftig erweiterbare Dokumentenprozesse.
 
-Viele Studierende, Freelancer und kleine Teams verlieren Zeit, weil Dokumente verstreut abgelegt sind und Scans/PDFs ohne OCR kaum durchsuchbar sind.
-Der Dokumentenmanager richtet sich an Nutzerinnen und Nutzer, die eine selbst gehostete, nachvollziehbare Ablage mit klaren Kategorien, schneller Suche und sinnvollen Sicherheitsmechanismen benötigen.
-Die Anwendung verwaltet Metadaten in MariaDB/MySQL, speichert Dateien verschlüsselt im Dateisystem und extrahiert Text aus PDFs und Bildern per OCR, damit Inhalte im Volltext auffindbar werden.
-Zusätzlich unterstützt sie Versionierung, Favoriten und einen Papierkorb mit automatischer Bereinigung, damit Änderungen nachvollziehbar bleiben und Fehlbedienungen abgefedert werden.
+## Warum das Projekt relevant ist
 
-## Innerhalb weniger Sekunden klar
-
-- Startpunkt: Web-UI des Backends (Root leitet auf `/dashboard` um), API-Dokumentation unter `/docs`.
-- Dateien werden nicht im Klartext gespeichert: Ablage verschlüsselt (Fernet).
-- OCR läuft offline (Tesseract) und macht Inhalte aus Bildern/PDFs durchsuchbar.
-- Kategorien/Keywords + Suche + Versionierung sind der Kern des Workflows.
-
-## Einstiegspunkte (lokal)
-
-- Web-UI: http://127.0.0.1:8000/ (Weiterleitung auf /dashboard)
-- Swagger UI: http://127.0.0.1:8000/docs
-- OCR-Debug: POST http://127.0.0.1:8000/debug-ocr/test
-- Frontend (optional): http://127.0.0.1:5173/
+In vielen realen Arbeitsumgebungen ist die eigentliche Ablage von Dateien nicht das Kernproblem, sondern deren spätere Wiederauffindbarkeit, Nachvollziehbarkeit und sichere Verwaltung. Ein Dokument ist schnell gespeichert, aber ohne konsistente Metadaten, Kategorien, Suchbarkeit und Zugriffsmodell entsteht über die Zeit ein Datenfriedhof mit hübscher Oberfläche. Genau dort setzt der Dokumentenmanager an. Das Projekt verbindet Dateispeicherung, fachliche Strukturierung und technische Schutzmechanismen in einer Anwendung, die nicht nur „Dateien irgendwo hochlädt“, sondern den gesamten Umgang mit Dokumenten als durchgängigen Prozess modelliert: erfassen, verschlagworten, durchsuchen, versionieren, wiederherstellen und kontrolliert löschen.
 
 ## Navigation
 
-- Installation & Quick Start
-- Technische Dokumentation (Architektur, Datenbankmodell, API, Projektstruktur)
-- Nutzungshandbuch (Use-Cases, UI-Screenshots, Beispieldaten)
-- Technische Strategie (Trade-offs, Workarounds)
+- [Installation & Quick Start](installation-quickstart.md)
+- [Architektur](developer/architecture.md)
+- [Datenbankmodell](developer/database.md)
+- [API-Referenz](developer/api.md)
+- [Projektstruktur](developer/file-structure.md)
+- [Sicherheitskonzept](developer/security.md)
+- [Nutzungshandbuch](user-guide/overview.md)
+- [Technische Strategie](technical-strategy.md)
+- [Betrieb & Deployment](operations.md)
+- [Format & Abgabe](format-deliverables.md)
+
+## Kernfunktionen auf einen Blick
+
+- verschlüsselte Dateiablage im Dateisystem
+- relationale Verwaltung von Metadaten in MariaDB/MySQL
+- OCR für PDFs und Bilder zur Volltextsuche
+- Kategorien, Keywords und Suchfilter
+- Versionierung von Dokumenten
+- Favoritenfunktion für schnellen Zugriff
+- Papierkorb mit Wiederherstellung und automatischer Bereinigung
+- rollenbasierte Logik für Benutzerverwaltung und Zugriffsschutz

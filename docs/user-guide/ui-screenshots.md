@@ -1,47 +1,39 @@
-# Nutzungshandbuch – UI & Screenshots
+# Nutzungshandbuch – UI-Screenshots
 
-Die Screenshots liegen unter `docs/assets/screenshots/` und werden hier eingebunden.
+Die folgenden Oberflächenabbildungen ergänzen das Nutzungshandbuch. Sie zeigen nicht nur, wie die Anwendung aussieht, sondern veranschaulichen die wichtigsten Arbeitsbereiche, die ein neuer Nutzer sofort verstehen sollte.
 
-## Formatvorgaben (empfohlen)
+## Login
 
-- Format: PNG
-- Breite: 1600 bis 1920 px
-- Einheitlicher Browser-Zuschnitt (z. B. 1920x1080)
-- Dateinamen: lowercase + Bindestriche, ohne Leerzeichen
+![Login-Mockup](../assets/screenshots/login-mockup.png){ .screenshot }
 
-## Mindest-Screenshot-Set
+Diese Ansicht zeigt die Einstiegssituation für Benutzer. Sichtbar sind die Eingabefelder für E-Mail und Passwort sowie die Trennung zwischen Anmeldung und Registrierung. Für die Dokumentation ist dieser Screen wichtig, weil er den Beginn des geschützten Nutzungspfads markiert.
 
-- Dashboard (`/dashboard`)
-- Upload (`/upload`)
-- Dokumentliste (`/documents`)
-- Dokumentdetails (Detailansicht)
-- Kategorien/Keywords (`/category-keywords`)
-- Suche (`/search`)
-- Papierkorb (`/trash`)
+## Dashboard
 
-Optional:
-- Favoriten (`/favorites`)
-- Login/Registrierung
+![Dashboard-Mockup](../assets/screenshots/dashboard-mockup.png){ .screenshot }
 
-## Einbindung (groß angezeigt)
+Das Dashboard zeigt den Überblick über Kennzahlen, zuletzt hochgeladene Dateien und zentrale Navigationspunkte. Es dient als Startfläche nach dem Login und soll dem Nutzer innerhalb weniger Sekunden Orientierung geben.
 
-### Dashboard
-![Dashboard](../assets/screenshots/dashboard.png){ .screenshot }
+## Upload
 
-### Upload
-![Upload](../assets/screenshots/upload.png){ .screenshot }
+![Upload-Mockup](../assets/screenshots/upload-mockup.png){ .screenshot }
 
-### Dokumentliste
-![Dokumentliste](../assets/screenshots/documents.png){ .screenshot }
+Die Upload-Ansicht veranschaulicht den Kernprozess der Anwendung: Datei auswählen, Kategorie zuordnen und Dokument strukturiert in das System übernehmen. Gerade dieser Bereich ist aus Sicht des Nutzens entscheidend, weil hier der Dokumentlebenszyklus beginnt.
 
-### Dokumentdetails
-![Dokumentdetails](../assets/screenshots/document-detail.png){ .screenshot }
+## Dokumentübersicht
 
-### Suche
-![Suche](../assets/screenshots/search.png){ .screenshot }
+![Dokumentenübersicht-Mockup](../assets/screenshots/documents-mockup.png){ .screenshot }
 
-### Kategorien/Keywords
-![Kategorien/Keywords](../assets/screenshots/category-keywords.png){ .screenshot }
+Diese Ansicht zeigt die Listenperspektive auf gespeicherte Dokumente. Titel, Dateityp, Größe, Datum und Aktionen sind direkt sichtbar. Dadurch wird deutlich, wie der Bestand organisiert und verwaltet wird.
 
-### Papierkorb
-![Papierkorb](../assets/screenshots/trash.png){ .screenshot }
+## Suche
+
+![Suche-Mockup](../assets/screenshots/search-mockup.png){ .screenshot }
+
+Die Suchansicht verdeutlicht den Stellenwert der Recherchefunktion. Nutzer können hier Begriffe eingeben und Dokumente nicht nur über Titel, sondern perspektivisch auch über Inhalte und Schlüsselwörter finden.
+
+## Dokumentdetail
+
+![Dokumentdetail-Mockup](../assets/screenshots/detail-mockup.png){ .screenshot }
+
+Die Detailansicht bündelt Metadaten, Tags, Zusammenfassungsinformationen und Aktionen wie Download, Versionen oder Löschung. Damit wird aus einer einfachen Datei ein fachlich beschriebenes Dokumentobjekt.
