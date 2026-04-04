@@ -1,111 +1,202 @@
 # Datenbankmodell
 
-Das Datenbankmodell bildet das fachliche Rückgrat des Dokumentenmanagers. Während Dateien selbst verschlüsselt im Dateisystem liegen, verwaltet die relationale Datenbank alle Metadaten, Beziehungen, Suchtexte, Zustände und sicherheitsrelevanten Informationen. Gerade im Bewertungsraster ist dieser Teil zentral, weil sich hier zeigt, ob die Anwendung nicht nur funktioniert, sondern auch logisch sauber modelliert wurde.
+Das Datenbankmodell bildet das fachliche Rückgrat des Dokumentenmanagers. Während Dateien verschlüsselt im Dateisystem liegen, verwaltet die relationale Datenbank alle Metadaten, Beziehungen, Suchtexte, Zustände und sicherheitsrelevante Informationen.
 
-## Kernobjekte
+---
 
-- **users**: Konten, Verifikation, optionale MFA, Berechtigungsbezug
-- **documents**: Metadaten, Eigentumszuordnung, OCR-Inhalte, Zustandsflags
-- **document_versions**: Versionierung einzelner Dokumentstände
-- **categories**: Benutzerbezogene Kategorien mit optionalen Schlüsselwörtern
-- **document_categories**: Many-to-Many-Beziehung zwischen Dokumenten und Kategorien
-- **email_verification_tokens**, **password_reset_tokens**, **mfa_codes**
-- **pending_uploads**: Zwischenspeicher für den Duplikat-Entscheidungsworkflow
+## Logisches Datenbankmodell
+
+Das vollständige Datenbankmodell zeigt alle Tabellen, Spalten, Datentypen und Beziehungen:
+
+![Logisches Datenbankmodell](../assets/images/datenbankmodell.png){ loading=lazy }
+
+[📥 Datenbankmodell als .drawio herunterladen](../assets/downloads/datenbankmodell.drawio){ .md-button }
+[🖼️ Datenbankmodell als PNG herunterladen](../assets/images/datenbankmodell.png){ .md-button .md-button--primary }
+
+---
 
 ## ER-Diagramm (vereinfacht)
 
 ```mermaid
 erDiagram
-  USERS ||--o{ DOCUMENTS : owns
-  DOCUMENTS ||--o{ DOCUMENT_VERSIONS : versions
-  USERS ||--o{ CATEGORIES : defines
-  DOCUMENTS }o--o{ CATEGORIES : tagged
-  USERS ||--o{ MFA_CODES : has
-  USERS ||--o{ EMAIL_VERIFICATION_TOKENS : verifies
-  USERS ||--o{ PASSWORD_RESET_TOKENS : resets
-  USERS ||--o{ PENDING_UPLOADS : owns
+    users ||--o{ documents : "besitzt"
+    users ||--o{ categories : "definiert"
+    users ||--o{ sessions : "hat"
+    users ||--o{ mfa_codes : "nutzt"
+    users ||--o{ email_verification_tokens : "verifiziert"
+    users ||--o{ password_reset_tokens : "setzt zurück"
+    users ||--o{ pending_uploads : "wartet auf"
+
+    documents ||--o{ document_versions : "versioniert"
+    documents }o--o{ categories : "kategorisiert"
+    documents ||--o{ document_tags : "getaggt"
+
+    categories ||--o{ document_categories : "verknüpft"
+
+    users ||--o{ access_logs : "protokolliert"
+    users ||--o{ admin_actions : "administriert"
 ```
 
-## Fachliche Modellierungsentscheidung
+---
 
-Die Datenbank wurde nicht nach dem Motto „welche Tabellen brauchen wir ungefähr?“ aufgebaut, sondern entlang fachlicher Verantwortlichkeiten. Benutzende, Dokumente, Versionen und Kategorien sind jeweils eigenständige Entitäten. Das ist wichtig, weil damit spätere Erweiterungen wie Rechteverfeinerung, Protokollierung oder zusätzliche Dokumentattribute möglich bleiben, ohne das Schema grundsätzlich umzubauen.
+## Fachbereiche im Schema
 
-## Detaillierte Beschreibung ausgewählter Tabellen
+Das Datenbankschema gliedert sich in vier logische Bereiche, die im Diagramm farblich gekennzeichnet sind:
 
-### users
+### Benutzerverwaltung
 
-Die Tabelle `users` verwaltet die grundlegende Identität eines Nutzers. Dazu gehören Login-Daten, Verifikationsstatus und MFA-relevante Zustände. Passwörter werden nicht im Klartext gespeichert, sondern gehasht. Dieser Punkt ist sicherheitstechnisch obligatorisch und signalisiert zugleich, dass das Projekt nicht nur funktional, sondern verantwortungsbewusst modelliert wurde.
+| Tabelle | Zweck |
+|---|---|
+| `users` | Benutzerkonten mit Login-Daten, Verifikationsstatus, MFA-Konfiguration und Spracheinstellung |
+| `roles` | Rollendefinitionen (z. B. Standardbenutzer, Administrator) |
+| `sessions` | Aktive Benutzersitzungen mit Token-Referenz und Ablaufzeit |
+| `quotes` | Motivationszitate für die Dashboard-Anzeige |
 
-### documents
+### Authentifizierung und Sicherheit
 
-`documents` ist die zentrale Metadatentabelle. Sie enthält unter anderem Dateiname, Pfad, MIME-Type, Prüfsummen, Dateigröße, Eigentümerbezug, OCR-Text und Statusinformationen wie Favorit oder Papierkorbzustand. Die Tabelle verbindet damit Suchbarkeit, Besitz, Dateiverwaltung und UI-Zustände.
+| Tabelle | Zweck |
+|---|---|
+| `mfa_codes` | Temporäre MFA-Codes für die Zwei-Faktor-Authentifizierung per E-Mail |
+| `password_reset_tokens` | Token für den Passwort-Reset-Workflow mit Ablaufzeit |
+| `email_verification_tokens` | Token zur E-Mail-Verifikation bei der Registrierung |
+| `email_verification_events` | Protokoll über Verifikationsereignisse |
 
-### document_versions
+### Dokumentenverwaltung
 
-Versionierung ist keine kosmetische Funktion, sondern fachlich wichtig. Wer ein Dokument überschreibt oder eine neue Fassung hochlädt, darf nicht gezwungen sein, alte Zustände endgültig zu verlieren. `document_versions` kapselt diese Historie und macht nachvollziehbar, welche Datei zu welchem Zeitpunkt gespeichert wurde.
+| Tabelle | Zweck |
+|---|---|
+| `documents` | Zentrale Metadatentabelle: Dateiname, Pfad, MIME-Type, Prüfsumme, Größe, OCR-Text, Favoriten- und Papierkorbstatus |
+| `folders` | Ordnerstruktur für hierarchische Organisation |
+| `categories` | Benutzerbezogene Kategorien mit verschlüsselten Keywords |
+| `storage_providers` | Konfiguration der Speicher-Backends |
+| `pending_uploads` | Zwischenspeicher für den Duplikat-Entscheidungsworkflow |
 
-### categories und document_categories
+### Dokument-Metadaten
 
-Kategorien sind benutzerbezogen modelliert. Das verhindert Konflikte zwischen globalen Kategoriesystemen und individuellen Organisationslogiken. Die separate Join-Tabelle `document_categories` bildet die n:m-Beziehung sauber ab und verhindert Redundanzen in der Tabelle `documents`.
+| Tabelle | Zweck |
+|---|---|
+| `document_versions` | Versionierte Dokumentstände mit eigenem Speicherpfad und Prüfsumme |
+| `document_tags` | Zuordnung von Tags zu Dokumenten |
+| `document_categories` | Join-Tabelle für die n:m-Beziehung zwischen Dokumenten und Kategorien |
 
-### pending_uploads
+### Administration und Protokollierung
 
-Diese Tabelle ist besonders interessant, weil sie zeigt, dass das Projekt reale Workflow-Komplexität abbildet. Wenn ein möglicher Duplikatfall erkannt wird, wird der Upload nicht blind verworfen oder überschrieben. Stattdessen wird ein Zwischenzustand gespeichert, bis die Benutzerentscheidung vorliegt. Genau diese Art von Zwischendomäne fehlt vielen oberflächlichen CRUD-Projekten.
+| Tabelle | Zweck |
+|---|---|
+| `access_logs` | Zugriffsprotokoll mit IP-Adresse und Zeitstempel |
+| `admin_actions` | Protokoll administrativer Aktionen |
+
+---
+
+## Detaillierte Tabellenbeschreibung
+
+### `users`
+
+Die Tabelle verwaltet die Identität eines Nutzers. Zentrale Spalten:
+
+- `id` (BIGINT, PK) – Eindeutige Benutzer-ID
+- `role_id` (SMALLINT, FK → `roles`) – Rollenzuordnung
+- `username` (VARCHAR 50, UNIQUE) – Eindeutiger Benutzername
+- `email` (VARCHAR 255, UNIQUE) – E-Mail-Adresse
+- `password_hash` (VARCHAR 255) – Bcrypt-gehashtes Passwort
+- `is_verified` (BOOLEAN) – E-Mail-Verifikationsstatus
+- `mfa_enabled` / `mfa_method` – MFA-Konfiguration
+- `language` (VARCHAR 10) – Sprachpräferenz (Standard: `de`)
+- `dashboard_protected_view` (BOOLEAN) – Geschützte Dashboard-Ansicht
+
+Passwörter werden niemals im Klartext gespeichert. Die Kombination aus Bcrypt-Hashing und optionaler MFA bildet die erste Verteidigungslinie des Systems.
+
+### `documents`
+
+Die zentrale Metadatentabelle verbindet Suchbarkeit, Besitz, Dateiverwaltung und UI-Zustände:
+
+- `id` (BIGINT, PK) – Dokumenten-ID
+- `owner_user_id` (BIGINT, FK → `users`, INDEX) – Eigentümer
+- `filename` / `original_filename` (VARCHAR) – Anzeige- und Originalname
+- `storage_path` (VARCHAR 1000) – Pfad zur verschlüsselten Datei
+- `stored_name` (VARCHAR 64, UNIQUE) – Interner Speichername
+- `size_bytes` (BIGINT) – Dateigröße
+- `checksum_sha256` (VARCHAR 64) – SHA-256-Prüfsumme für Duplikaterkennung
+- `mime_type` (VARCHAR 120) – MIME-Typ der Datei
+- `ocr_text` (TEXT) – Extrahierter OCR-Volltext
+- `is_favorite` (BOOLEAN, INDEX) – Favoritenstatus
+- `is_deleted` (BOOLEAN) – Soft-Delete für Papierkorblogik
+- `deleted_at` (TIMESTAMP, INDEX) – Löschzeitpunkt für automatische Bereinigung
+- `created_at` (TIMESTAMP) – Erstellungszeitpunkt
+
+### `document_versions`
+
+Versionierung als fachlich wichtige Funktion, nicht als Kosmetik. Wer ein Dokument überschreibt, darf alte Zustände nicht verlieren:
+
+- `id` (BIGINT, PK) – Versions-ID
+- `document_id` (BIGINT, FK → `documents`) – Zugehöriges Dokument
+- `version_number` (INT) – Fortlaufende Versionsnummer
+- `storage_path` (VARCHAR) – Separater Speicherpfad der Version
+- `checksum_sha256` (VARCHAR 64) – Prüfsumme der Version
+- `size_bytes` (BIGINT) – Dateigröße der Version
+- `created_at` / `updated_at` (TIMESTAMP) – Zeitstempel
+
+### `categories` und `document_categories`
+
+Kategorien sind benutzerbezogen modelliert, um Konflikte zwischen individuellen Organisationslogiken zu vermeiden. Keywords werden verschlüsselt gespeichert (`encrypt_text` / `decrypt_text`). Die separate Join-Tabelle `document_categories` bildet die n:m-Beziehung sauber ab.
+
+### `pending_uploads`
+
+Diese Tabelle zeigt, dass das Projekt reale Workflow-Komplexität abbildet. Bei erkannten Duplikaten wird der Upload nicht blind verworfen, sondern als Zwischenzustand gespeichert, bis die Benutzerentscheidung vorliegt:
+
+- `target_document_id` (BIGINT, FK → `documents`) – Referenz auf das potenzielle Duplikat
+- `original_filename` / `mime_type` / `size_bytes` – Metadaten des Uploads
+- `storage_path` (VARCHAR) – Temporärer Speicherpfad
+- `expires_at` (DATETIME) – Automatische Bereinigung nach Ablauf
+
+---
 
 ## Normalisierung
 
-Das Schema orientiert sich an den Grundprinzipien der relationalen Modellierung und ist bis mindestens zur **3. Normalform** sinnvoll strukturiert.
+Das Schema ist bis mindestens zur **dritten Normalform** strukturiert:
 
-### 1. Normalform
+**1NF** – Alle Attribute sind atomar. Keine Listen oder verschachtelten Strukturen in Spalten.
 
-Alle Attribute sind atomar, also nicht als Listen oder verschachtelte Strukturen in einer Spalte abgelegt. Das erhöht Auswertbarkeit, Vergleichbarkeit und Integrität.
+**2NF** – Nichtschlüsselattribute hängen vollständig vom Primärschlüssel ab. Keine partiellen Abhängigkeiten in Beziehungstabellen.
 
-### 2. Normalform
+**3NF** – Transitive Abhängigkeiten werden vermieden. Kategoriedaten werden nicht redundant in Dokumenttabellen repliziert, sondern über Beziehungen abgebildet.
 
-Nichtschlüsselattribute hängen vollständig vom Primärschlüssel ab. Dies ist insbesondere bei Beziehungs- und Versionstabellen relevant, wo keine partiellen Abhängigkeiten akzeptiert werden dürfen.
-
-### 3. Normalform
-
-Transitive Abhängigkeiten werden vermieden. Beispielsweise werden Kategoriedaten nicht redundant in Dokumenttabellen repliziert, sondern über Beziehungen abgebildet. Dadurch sinkt die Redundanz und die Pflege wird konsistenter.
+---
 
 ## Integritätsbedingungen
 
-Eine saubere Datenbank lebt nicht nur von Tabellen, sondern von Regeln:
+- **Primärschlüssel** auf allen Tabellen (`BIGINT AUTO_INCREMENT`)
+- **Fremdschlüssel** mit `ON DELETE CASCADE` für referenzielle Integrität
+- **Unique Constraints** auf `users.username`, `users.email`, `documents.stored_name`
+- **NOT NULL** für Pflichtspalten wie `filename`, `storage_path`, `password_hash`
+- **SHA-256-Prüfsummen** auf Dokumenten für Duplikaterkennung und Integritätskontrolle
+- **Typkonsistenz** zwischen Primär- und Fremdschlüsseln (durchgehend `BIGINT`)
 
-- **Primärschlüssel** sichern eindeutige Identität
-- **Fremdschlüssel** sichern referenzielle Integrität
-- **Unique Constraints** verhindern unerwünschte Dubletten, z. B. bei Kategorienamen pro Nutzerkontext
-- **NOT NULL** stellt Mindestvollständigkeit sicher
-- **Prüfsummen** unterstützen Duplikaterkennung und Integritätskontrolle
+---
 
-Gerade bei MariaDB/MySQL ist auf konsequente Typkonsistenz zwischen Primär- und Fremdschlüsseln zu achten. BIGINT auf der einen und INT auf der anderen Seite erzeugt den klassischen Datenbanksumpf, in dem Foreign Keys plötzlich schlechte Laune bekommen.
+## Indizierung
 
-## Indizierung und Performance
+Sinnvolle Indizes beschleunigen die typischen Zugriffsmuster:
 
-Das Datenbankschema berücksichtigt nicht nur Korrektheit, sondern auch Zugriffsmuster. Sinnvolle Kandidaten für Indizes sind:
+| Index | Zweck |
+|---|---|
+| `documents.owner_user_id` | Dokumentliste pro Benutzer |
+| `documents.checksum_sha256` | Duplikatprüfung |
+| `documents.is_deleted` / `deleted_at` | Papierkorb-Filterung und -Bereinigung |
+| `documents.is_favorite` | Favoritenliste |
+| `document_versions.document_id` | Versionsabruf |
+| `categories.user_id` | Kategorieliste pro Benutzer |
 
-- `documents.owner_user_id`
-- `documents.checksum_sha256`
-- `documents.is_deleted`
-- `document_versions.document_id`
-- Join-Keys in Beziehungstabellen
-
-Diese Indizes beschleunigen typische Operationen wie Dokumentlisten pro Nutzer, Duplikatprüfung, Versionsabrufe und Filter nach Papierkorbzustand. Ein unindiziertes System kann fachlich korrekt und trotzdem in der Praxis unerquicklich langsam sein. Performance ist also kein Luxus, sondern Teil funktionaler Qualität.
-
-## Transaktionen und Konsistenz
-
-Beim Upload oder bei der Versionierung werden mehrere Schritte miteinander verknüpft: Metadaten anlegen, Datei speichern, OCR-Texte verknüpfen, Kategorien zuordnen, Zustände setzen. Solche Prozesse müssen transaktional gedacht werden, damit keine halbfertigen Datensätze entstehen. Wenn eine Datei geschrieben, aber die Metadaten nicht gespeichert werden, ist das System formal inkonsistent. Daher ist die Trennung in nachvollziehbare Datenbankoperationen und klar definierte Fehlerbehandlung wichtig.
+---
 
 ## Migrationen mit Alembic
 
 Schemaänderungen werden über Alembic verwaltet:
 
 ```bash
-alembic upgrade head
+alembic upgrade head        # Schema auf aktuellen Stand bringen
+alembic revision --autogenerate -m "Beschreibung"  # Neue Migration erzeugen
+alembic downgrade -1        # Letzte Migration zurückrollen
 ```
 
-Diese Entscheidung ist im Schulprojekt besonders wertvoll, weil sie technische Reife demonstriert. Statt „man hat halt mal schnell die Tabelle angepasst“ existiert damit ein nachvollziehbarer Entwicklungspfad des Schemas. Das ist für Teamarbeit, Versionskontrolle und spätere Abnahme deutlich professioneller.
-
-## Fazit zum Datenbankmodell
-
-Das Datenbankmodell des Dokumentenmanagers ist nicht überengineert, aber klar strukturiert und fachlich begründet. Es unterstützt Sicherheit, Versionierung, Suchbarkeit, Rollenbezug und Workflow-Zwischenzustände. Dadurch ist es sowohl aus Nutzersicht funktional als auch aus Entwicklersicht wartbar und erweiterbar.
+Alembic stellt sicher, dass sich das Schema nachvollziehbar und versionskontrolliert entwickelt – wesentlich professioneller als manuelle SQL-Anpassungen.

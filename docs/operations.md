@@ -1,41 +1,95 @@
 # Betrieb & Deployment
 
-Diese Seite bündelt Hinweise für den Betrieb des Dokumentenmanagers außerhalb des reinen Entwicklungskontexts. Auch wenn es sich um ein Schulprojekt handelt, ist es fachlich sinnvoll, Betriebsfragen zu dokumentieren, weil genau dort oft sichtbar wird, ob eine Anwendung nur für die Vorführung gebaut oder tatsächlich als System gedacht wurde.
+Diese Seite bündelt Hinweise für den Betrieb des Dokumentenmanagers außerhalb des reinen Entwicklungskontexts.
+
+---
 
 ## Lokaler Entwicklungsbetrieb
 
-Für lokale Entwicklung eignet sich Uvicorn mit `--reload`. Änderungen am Code werden damit automatisch nachgeladen. Diese Betriebsform ist komfortabel, aber nicht für produktionsnahe Nutzung gedacht.
+Für lokale Entwicklung eignet sich Uvicorn mit `--reload`. Änderungen am Code werden automatisch nachgeladen:
+
+```bash
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+Diese Betriebsform ist komfortabel, aber nicht für den produktionsnahen Einsatz gedacht.
+
+---
 
 ## Produktivnahe Ausführung
 
-Für einen stabileren Betrieb sollte die Anwendung hinter einem Reverse Proxy wie Nginx laufen. HTTPS, Header-Handling, Request-Größenbegrenzung und Logging lassen sich dort kontrollierter konfigurieren. Die Dokumentation benennt diesen Punkt bewusst, weil Sicherheit und Betrieb nicht an der Python-Datei enden.
+Für einen stabileren Betrieb sollte die Anwendung hinter einem Reverse Proxy (z. B. Nginx) laufen. HTTPS, Header-Handling, Request-Größenbegrenzung und Logging lassen sich dort kontrollierter konfigurieren.
+
+Empfohlene Uvicorn-Konfiguration für Produktion:
+
+```bash
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+```
+
+!!! warning "Sicherheit"
+    In produktionsnahen Umgebungen dürfen Datenbank und Mailserver nicht ohne Netzsegmentierung öffentlich erreichbar sein. `APP_ENV` sollte nicht auf `development` stehen.
+
+---
 
 ## Geheimnismanagement
 
-- `.env` niemals committen
+- `.env` niemals in das Repository einchecken
 - Produktionsschlüssel getrennt von Entwicklungswerten halten
 - Zugriffsrechte auf Konfigurationsdateien beschränken
-- Schlüsselrotation zumindest konzeptionell berücksichtigen
+- Schlüsselrotation konzeptionell berücksichtigen – insbesondere bei `FILES_FERNET_KEY`
+
+---
 
 ## Backup-Strategie
 
 ### Datenbank
 
-Regelmäßige Dumps, dokumentierte Restore-Tests und klare Verantwortlichkeiten sind notwendig. Ein Backup, das nie zurückgespielt wurde, ist eher ein Glaube als ein Plan.
+Regelmäßige Dumps mit dokumentierten Restore-Tests:
+
+```bash
+# Backup
+mysqldump -u dm -p dokumentenmanager > backup_$(date +%Y%m%d).sql
+
+# Restore
+mysql -u dm -p dokumentenmanager < backup_20260404.sql
+```
 
 ### Dateispeicher
 
-Der Inhalt von `FILES_DIR` muss gemeinsam mit der Datenbank gesichert werden, weil Metadaten und Dateien logisch zusammengehören. Ohne passenden Verschlüsselungsschlüssel können gesicherte Dateien nicht sinnvoll wiederhergestellt werden.
+Der Inhalt von `FILES_DIR` muss gemeinsam mit der Datenbank gesichert werden, weil Metadaten und verschlüsselte Dateien logisch zusammengehören. Ohne den passenden Fernet-Schlüssel können gesicherte Dateien nicht wiederhergestellt werden.
 
-## Updates
+!!! danger "Wichtig"
+    Ein Backup ohne zugehörigen `FILES_FERNET_KEY` ist wertlos. Der Schlüssel muss separat und sicher aufbewahrt werden.
 
-Nach Änderungen am Projektstand sollten Migrationsskripte ausgeführt und die Anwendung neu gestartet werden:
+---
+
+## Updates und Migrationen
+
+Nach Änderungen am Projektstand:
 
 ```bash
+git pull
+pip install -r requirements.txt
 alembic upgrade head
-python -m uvicorn app.main:app --reload
+# Anwendung neu starten
 ```
 
-## GitHub Pages für die Doku
+---
 
-Die Projektdokumentation selbst ist für GitHub Pages ausgelegt. Der Workflow unter `.github/workflows/docs-pages.yml` baut die MkDocs-Seite automatisiert und veröffentlicht sie. Dadurch ist die Dokumentation öffentlich erreichbar, versioniert und sauber von der eigentlichen Anwendung getrennt.
+## Automatische Papierkorb-Bereinigung
+
+Der `trash_service` führt beim Start der Anwendung einen periodischen Hintergrund-Task aus, der abgelaufene Papierkorb-Einträge automatisch bereinigt. Die Bereinigungsfrist ist konfigurierbar.
+
+---
+
+## GitHub Pages für die Dokumentation
+
+Die Projektdokumentation ist für GitHub Pages ausgelegt. Der Workflow unter `.github/workflows/docs-pages.yml` baut die MkDocs-Seite automatisiert:
+
+```bash
+# Lokale Vorschau
+pip install mkdocs-material
+mkdocs serve
+```
+
+Die Dokumentation ist unter [https://chfchris.github.io/Dokumentation-zur-Projektarbeit/](https://chfchris.github.io/Dokumentation-zur-Projektarbeit/) öffentlich erreichbar.

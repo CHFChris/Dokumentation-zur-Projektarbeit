@@ -1,49 +1,103 @@
-# Security-Konzept
+# Sicherheitskonzept
 
-Das Security-Konzept des Dokumentenmanagers verfolgt keinen Anspruch auf maximale Enterprise-Komplexität, wohl aber auf fachlich sinnvolle Schutzmechanismen für ein realistisches Schul- und Praxisprojekt. Sicherheitsmaßnahmen sind hier nicht Dekoration, sondern direkte Antwort auf die Tatsache, dass Dokumente personenbezogene, vertrauliche oder organisatorisch sensible Inhalte enthalten können.
+Das Sicherheitskonzept des Dokumentenmanagers verfolgt keinen Anspruch auf maximale Enterprise-Komplexität, wohl aber auf fachlich sinnvolle Schutzmechanismen. Dokumente können personenbezogene, vertrauliche oder organisatorisch sensible Inhalte enthalten – Sicherheitsmaßnahmen sind daher keine Dekoration, sondern direkte Notwendigkeit.
+
+---
 
 ## Schutzziele
 
-- **Vertraulichkeit:** Unbefugte dürfen Dateiinhalte nicht lesen können.
-- **Integrität:** Inhalte und Zustände sollen nicht unbemerkt manipuliert werden.
-- **Authentizität:** Zugriffe sollen Benutzern eindeutig zuordenbar sein.
-- **Verfügbarkeit:** Wichtige Dokumente sollen nicht leichtfertig verloren gehen.
+| Ziel | Maßnahme |
+|---|---|
+| **Vertraulichkeit** | Fernet-Verschlüsselung aller Dateiinhalte, Bcrypt-Hashing der Passwörter |
+| **Integrität** | SHA-256-Prüfsummen, transaktionale Datenbankoperationen |
+| **Authentizität** | JWT-Token, MFA, E-Mail-Verifikation |
+| **Verfügbarkeit** | Soft-Delete mit Papierkorb, Versionierung, geplante Backup-Strategie |
 
-## Passwortschutz
+---
 
-Passwörter werden nicht im Klartext gespeichert. Stattdessen werden Hashverfahren eingesetzt, typischerweise über `passlib[bcrypt]`. Diese Entscheidung ist grundlegend und nicht verhandelbar, weil ein Datenleck sonst sofort zur Preisgabe von Benutzerpasswörtern führen würde.
+## Authentifizierung
 
-## Datei- und Textverschlüsselung
+### Passwort-Hashing
 
-Dateiinhalte werden verschlüsselt im Dateisystem abgelegt. Dafür wird ein Fernet-Schlüssel verwendet. Diese Trennung zwischen Metadatenbank und verschlüsselter Dateispeicherung ist sicherheitstechnisch sinnvoll, weil sie die unmittelbare Lesbarkeit sensibler Inhalte aus dem Dateivolume verhindert.
+Passwörter werden mit `passlib[bcrypt]` gehasht. Klartext-Passwörter werden zu keinem Zeitpunkt gespeichert oder geloggt. Bcrypt ist bewusst rechenintensiv und erschwert Brute-Force-Angriffe.
+
+### JWT-Token
+
+Die Anwendung nutzt JSON Web Tokens für zustandslose Authentifizierung. Token enthalten Benutzer-ID und Ablaufzeit. Für Web-Routen werden sie als HTTP-Only-Cookies transportiert, für API-Aufrufe als Bearer-Token.
+
+| Token-Typ | Lebensdauer | Konfiguration |
+|---|---|---|
+| Access-Token | 60 Minuten | `ACCESS_TOKEN_EXPIRE_MINUTES` |
+| Refresh-Token | 7 Tage | `REFRESH_TOKEN_EXPIRE_DAYS` |
+
+### Multi-Faktor-Authentifizierung (MFA)
+
+Benutzer können MFA per E-Mail aktivieren. Nach dem Login wird ein temporärer Code an die registrierte E-Mail-Adresse gesendet. Der Code hat eine begrenzte Gültigkeitsdauer (`MFA_CODE_TTL_MINUTES`). MFA wird nach dem ersten Login automatisch vorgeschlagen.
+
+### E-Mail-Verifikation
+
+Neue Benutzerkonten müssen per E-Mail verifiziert werden. Erst nach erfolgreicher Verifikation ist der volle Funktionsumfang zugänglich. Verifikations-Token haben eine begrenzte Gültigkeitsdauer.
+
+---
+
+## Verschlüsselung
+
+### Dateiverschlüsselung
+
+Alle hochgeladenen Dateien werden vor der Speicherung mit Fernet (AES-128-CBC) verschlüsselt. Der Schlüssel wird über `FILES_FERNET_KEY` in der `.env` konfiguriert. Die verschlüsselten Dateien liegen im Dateisystem (`FILES_DIR`), getrennt von den relationalen Metadaten in der Datenbank.
+
+### Keyword-Verschlüsselung
+
+Kategorie-Keywords werden ebenfalls verschlüsselt in der Datenbank gespeichert (`encrypt_text` / `decrypt_text`). Dadurch sind auch Metadaten bei einem Datenbankzugriff nicht direkt lesbar.
+
+### Trennung von Metadaten und Dateiinhalten
+
+Diese Architekturentscheidung ist sicherheitstechnisch zentral: Ein Zugriff auf die Datenbank allein gibt keine Dateiinhalte preis. Ein Zugriff auf das Dateisystem allein liefert nur verschlüsselte Binärdaten.
+
+---
 
 ## Token-basierte Prozesse
 
-Für Verifikation, MFA oder Passwort-Reset werden Tokens bzw. Codes verwendet. Wichtig sind dabei:
+### Passwort-Reset
 
-- klare Gültigkeitsdauer
-- Rate Limits
-- nachvollziehbarer Ablauf
-- Trennung zwischen Besitznachweis und eigentlicher Kontonutzung
+1. Benutzer gibt E-Mail-Adresse ein
+2. System erzeugt zeitlich begrenzten Reset-Token
+3. Token wird per E-Mail verschickt
+4. Benutzer setzt neues Passwort mit gültigem Token
 
-## Rollen und Zugriff
+Rate-Limiting (`RESET_RATE_LIMIT_MINUTES`) verhindert Missbrauch durch wiederholte Anfragen.
 
-Die Anwendung trennt Benutzerkontexte, Dokumenteigentum und organisatorische Funktionen. Auch wenn das Projekt keine komplexe Unternehmensrollenmatrix abbildet, ist die grundlegende Idee klar: Nicht jede Funktion soll jedem Benutzer in jedem Kontext offenstehen.
+### Verifikation
 
-## Sicherheitsrelevante Schwachstellen und Gegenmaßnahmen
+E-Mail-Verifikation und Verifikations-Events werden protokolliert, um den Verifikationsprozess nachvollziehbar zu machen.
 
-### Risiko: Unsichere `.env`
+---
 
-Wenn Schlüssel im Repository landen oder zwischen Teammitgliedern unkontrolliert kopiert werden, ist die Sicherheitsarchitektur faktisch beschädigt. Gegenmaßnahme: `.gitignore`, klare Dokumentation und getrennte lokale Schlüssel.
+## Zugriffskontrolle
 
-### Risiko: OCR als Angriffsfläche
+Die Anwendung trennt Benutzerkontexte und Dokumenteigentum:
 
-Dateiverarbeitung ist grundsätzlich ein riskanter Bereich, weil Dateien komplexe Formate enthalten können. Gegenmaßnahme: begrenzte Dateitypen, Größenlimits, kontrollierte Verarbeitung und keine blind ausgeführten Fremdinhalte.
+- Jeder Benutzer sieht nur eigene Dokumente
+- Kategorien sind benutzerbezogen
+- Administrative Funktionen sind über `role_id` gesteuert
+- Audit-Logs protokollieren sicherheitsrelevante Aktionen
 
-### Risiko: Fehlkonfigurierte Berechtigungen im Dateisystem
+---
 
-Wenn `FILES_DIR` für falsche Konten beschreibbar oder lesbar ist, nützt Verschlüsselung allein nicht mehr genug. Gegenmaßnahme: gezielte Rechtevergabe, getrennte Volumes, klare Betriebsanweisungen.
+## Sicherheitsrelevante Risiken und Gegenmaßnahmen
 
-## Fazit
+!!! warning "Risiko: Unsichere `.env`"
+    **Szenario:** Schlüssel werden ins Repository eingecheckt oder zwischen Teammitgliedern unkontrolliert kopiert.
+    **Gegenmaßnahme:** `.gitignore`, dokumentierte Schlüsselerzeugung, getrennte Entwicklungs- und Produktionsschlüssel.
 
-Das Security-Konzept des Dokumentenmanagers zeigt, dass Schutzmechanismen systematisch mitgedacht wurden: Hashing, Verschlüsselung, Token-Prozesse, Zugriffstrennung und sicherheitsrelevante Konfiguration sind dokumentiert. Für ein Schulprojekt ist das nicht bloß „nett“, sondern ein deutlicher Nachweis technischer Reife.
+!!! warning "Risiko: OCR als Angriffsfläche"
+    **Szenario:** Manipulierte Dateien könnten bei der OCR-Verarbeitung Schwachstellen ausnutzen.
+    **Gegenmaßnahme:** Begrenzte Dateitypen (PDF, DOCX), Größenlimits (`MAX_UPLOAD_MB`), kontrollierte Verarbeitung.
+
+!!! warning "Risiko: Fehlkonfigurierte Dateisystem-Berechtigungen"
+    **Szenario:** `FILES_DIR` ist für unbefugte Konten lesbar.
+    **Gegenmaßnahme:** Restriktive Dateiberechtigungen, getrennte Volumes, dokumentierte Betriebsanweisungen.
+
+!!! warning "Risiko: Schlüsselrotation"
+    **Szenario:** Fernet-Schlüssel muss getauscht werden, bestehende Dateien werden unlesbar.
+    **Gegenmaßnahme:** Schlüsselrotation muss geplant erfolgen, inklusive Re-Verschlüsselung bestehender Dateien.

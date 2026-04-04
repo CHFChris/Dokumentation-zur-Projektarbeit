@@ -1,69 +1,175 @@
 # Architektur
 
-Diese Seite dokumentiert die Systemarchitektur des Dokumentenmanagers aus Entwicklerperspektive. Ziel ist nicht bloß eine hübsche Grafik, sondern eine nachvollziehbare Beschreibung der fachlichen und technischen Struktur. Gerade im Bewertungsraster ist entscheidend, dass die Konzeption konsistent, wartbar und verständlich dokumentiert wird. Deshalb wird hier das System erst im C4-Kontext eingeordnet und anschließend auf Container- und Komponentenebene textlich erläutert.
+Die Systemarchitektur des Dokumentenmanagers wird hier aus Entwicklerperspektive dokumentiert. Die Beschreibung folgt dem C4-Modell und arbeitet sich von der Kontextebene über die Container-Ebene bis zur Komponentenbeschreibung vor.
 
-## C4 – Context Level
+---
 
-Im C4-Kontextmodell steht der Dokumentenmanager als zentrale Anwendung zwischen mehreren realen Anforderungen: Benutzer möchten Dokumente sicher speichern, schnell wiederfinden, bearbeiten, versionieren und bei Bedarf wiederherstellen. Die Anwendung kommuniziert mit einem relationalen Datenbanksystem und verarbeitet Dateien in einem separaten Speicherbereich. Optional greifen OCR-Werkzeuge ein, um Inhalte aus PDFs oder Bildern zu extrahieren. Das bedeutet: Der fachliche Kern des Systems ist nicht einfach „Datei hochladen“, sondern die Orchestrierung aus Benutzerinteraktion, Metadatenhaltung, verschlüsselter Speicherung, Suche und Sicherheitslogik.
+## C4 – Kontextebene
+
+Im Kontextmodell steht der Dokumentenmanager als zentrale Anwendung zwischen Benutzern und mehreren technischen Subsystemen. Der fachliche Kern ist nicht einfach „Datei hochladen", sondern die Orchestrierung aus Benutzerinteraktion, Metadatenhaltung, verschlüsselter Speicherung, Volltextsuche und Sicherheitslogik.
 
 ```mermaid
 flowchart LR
-    U[Benutzer] --> W[Dokumentenmanager]
-    A[Administrator] --> W
-    W --> DB[MariaDB oder MySQL]
-    W --> FS[Verschlüsselter Dateispeicher]
-    W --> OCR[OCR Werkzeuge]
+    U["👤 Benutzer"] --> W["🖥️ Dokumentenmanager"]
+    A["🔧 Administrator"] --> W
+    W --> DB["🗄️ MariaDB / MySQL"]
+    W --> FS["🔒 Verschlüsselter Dateispeicher"]
+    W --> OCR["📄 OCR-Werkzeuge"]
+    W --> SMTP["✉️ SMTP-Server"]
 ```
 
-## C4 – Container Level
+Der Benutzer interagiert über den Browser mit der Anwendung. Im Hintergrund kommuniziert das System mit der relationalen Datenbank für Metadaten, dem Dateisystem für verschlüsselte Dokumente, OCR-Werkzeugen für Textextraktion und einem SMTP-Server für Verifikations- und Reset-Mails.
 
-Auf Container-Ebene besteht das System aus vier wesentlichen Bausteinen:
+---
 
-1. **Web-UI / Browserzugriff** – stellt die Benutzeroberfläche für Upload, Suche, Detailansicht, Papierkorb und Administration bereit.
-2. **FastAPI-Backend** – bildet die zentrale Anwendungslogik, validiert Requests, steuert Authentifizierung, Verschlüsselung, Suchlogik, Versionierung und Datenzugriffe.
-3. **MariaDB/MySQL-Datenbank** – speichert relationale Metadaten, Benutzerinformationen, Kategorien, Token, Versionen und weitere strukturierte Zustände.
-4. **Verschlüsselter Dateispeicher** – hält die eigentlichen Dateien physisch getrennt von den Metadaten, wodurch Sicherheits- und Betriebsaspekte sauberer modellierbar werden.
+## C4 – Container-Ebene
+
+Auf Container-Ebene besteht das System aus vier Hauptbausteinen:
 
 ```mermaid
 flowchart TB
-    Browser[Browser] --> API[FastAPI Backend]
-    API --> DB[MariaDB oder MySQL]
-    API --> Storage[Dateispeicher]
-    API --> OCR[OCR Verarbeitung]
+    Browser["🌐 Browser"] --> API["⚡ FastAPI-Backend"]
+    API --> DB["🗄️ MariaDB / MySQL"]
+    API --> Storage["📁 Dateispeicher<br/><small>Fernet-verschlüsselt</small>"]
+    API --> OCR["📄 OCR-Pipeline<br/><small>Tesseract + Poppler</small>"]
+    API --> Mail["✉️ SMTP"]
 ```
 
-## Komponentenbeschreibung im Backend
+| Container | Technologie | Verantwortung |
+|---|---|---|
+| **Web-UI** | Jinja2-Templates, HTML/CSS/JS | Benutzeroberfläche für Upload, Suche, Verwaltung |
+| **FastAPI-Backend** | Python, FastAPI, SQLAlchemy | Geschäftslogik, Authentifizierung, Verschlüsselung |
+| **Datenbank** | MariaDB / MySQL | Relationale Metadaten, Benutzer, Token, Kategorien |
+| **Dateispeicher** | Dateisystem mit Fernet | Verschlüsselte Binärdaten, getrennt von Metadaten |
 
-Die Backend-Architektur folgt dem Prinzip der Verantwortungsaufteilung. Das Projekt trennt dabei bewusst zwischen HTTP-naher Schicht, Fachlogik und Datenzugriff. Diese Trennung reduziert Kopplung und verhindert, dass Routen, Datenbankabfragen, Kryptologik und Validierung unkontrolliert ineinander laufen. Genau solche Vermischungen wirken anfangs praktisch, werden aber später zu Wartungsfallen.
+---
 
-### Router / Endpunkte
+## Komponentenarchitektur im Backend
 
-Router definieren die extern sichtbaren Schnittstellen des Systems. Hier werden Routen wie Authentifizierung, Upload, Suchfunktionen, Benutzerverwaltung oder Dokumentaktionen abgebildet. Router sind verantwortlich für die Entgegennahme der Anfrage, die Übergabe an Services und die Rückgabe der Antwort.
+Die Backend-Architektur folgt dem Prinzip der Schichtenarchitektur mit klarer Verantwortungstrennung. Routen, Geschäftslogik und Datenzugriff sind bewusst voneinander entkoppelt.
 
-### Service-Schicht
+```mermaid
+flowchart TB
+    subgraph Router ["Router-Schicht"]
+        R1["auth"]
+        R2["upload"]
+        R3["documents"]
+        R4["categories"]
+        R5["users / profile"]
+        R6["audit_logs"]
+    end
 
-Die Service-Schicht enthält die eigentliche Fachlogik. Hier wird entschieden, wie ein Dokument verarbeitet, wie ein Duplikat erkannt, wie eine Version erstellt oder wie eine Suche mit Metadaten und OCR-Inhalten kombiniert wird. Diese Schicht ist der Ort, an dem Geschäftsregeln leben sollten.
+    subgraph Services ["Service-Schicht"]
+        S1["auth_service"]
+        S2["document_service"]
+        S3["ocr_service"]
+        S4["duplicate_service"]
+        S5["trash_service"]
+        S6["version_service"]
+        S7["mfa_service"]
+        S8["email_service"]
+    end
 
-### Datenzugriff / Modelle
+    subgraph Data ["Datenzugriff"]
+        D1["SQLAlchemy-Modelle"]
+        D2["Repositories"]
+        D3["Alembic-Migrationen"]
+    end
 
-SQLAlchemy-Modelle bilden die relationale Struktur ab. Sie definieren Entitäten und Beziehungen und stellen sicher, dass Fachobjekte nachvollziehbar persistiert werden. Alembic sorgt dafür, dass Änderungen am Schema reproduzierbar dokumentiert und migriert werden können.
+    subgraph Utils ["Hilfsdienste"]
+        U1["crypto_utils"]
+        U2["file_storage"]
+        U3["hashing"]
+    end
+
+    Router --> Services
+    Services --> Data
+    Services --> Utils
+```
+
+### Router-Schicht (`app/api/routes/`, `app/web/`)
+
+Router definieren die extern sichtbaren Schnittstellen. Sie nehmen Anfragen entgegen, delegieren an die Service-Schicht und geben Antworten zurück. Die Trennung zwischen `api/routes/` (JSON-APIs) und `web/` (HTML-Routen) ermöglicht unabhängige Weiterentwicklung beider Kanäle.
+
+### Service-Schicht (`app/services/`)
+
+Hier lebt die eigentliche Geschäftslogik: Upload-Verarbeitung mit Duplikaterkennung, OCR-Workflows, Berechtigungsprüfungen, Versionierung, Favoritenverwaltung, Papierkorb-Bereinigung, MFA-Codes und E-Mail-Versand. Diese Schicht verhindert, dass Logik unkontrolliert in Routern zerfließt.
+
+### Datenzugriff (`app/models/`, `app/repositories/`, `app/db/`)
+
+SQLAlchemy-Modelle bilden die relationale Struktur ab. Repositories kapseln wiederkehrende Datenbankoperationen. Alembic sorgt für reproduzierbare Schema-Migrationen.
+
+### Hilfsdienste (`app/utils/`)
+
+Querschnittsfunktionen wie Fernet-Verschlüsselung, SHA-256-Hashing, Dateispeicher-Operationen und E-Mail-Hilfsfunktionen. Saubere Utility-Bereiche vermeiden Code-Duplikation.
+
+---
 
 ## Beispielhafter Login-Ablauf
 
 ```mermaid
 sequenceDiagram
-    actor User
+    actor User as Benutzer
     participant Browser
-    participant Backend
-    participant Database
+    participant Backend as FastAPI
+    participant DB as Datenbank
+
     User->>Browser: Zugangsdaten eingeben
-    Browser->>Backend: POST Login
-    Backend->>Database: Benutzer laden
-    Database-->>Backend: Benutzerdaten und Passwort Hash
-    Backend->>Backend: Passwort prüfen und Token erzeugen
-    Backend-->>Browser: Zugriff erlauben
+    Browser->>Backend: POST /auth/login-web
+    Backend->>DB: Benutzer laden (E-Mail / Username)
+    DB-->>Backend: Benutzerdaten + Passwort-Hash
+    Backend->>Backend: Passwort prüfen (bcrypt)
+
+    alt MFA aktiviert
+        Backend-->>Browser: MFA-Challenge anzeigen
+        User->>Browser: MFA-Code eingeben
+        Browser->>Backend: POST /auth/mfa/verify-web
+        Backend->>DB: MFA-Code validieren
+    end
+
+    Backend->>Backend: JWT-Token erzeugen
+    Backend-->>Browser: Cookie setzen, Redirect zum Dashboard
 ```
 
-## Warum diese Architektur sinnvoll ist
+---
 
-Für ein Schulprojekt wäre es möglich gewesen, eine deutlich simplere Struktur zu wählen: eine Datei, ein paar Routen, direkte SQL-Statements, ein Ordner für Uploads und fertig. Das hätte kurzfristig funktioniert, aber architektonisch kaum Aussagekraft gehabt. Die hier dokumentierte Struktur zeigt dagegen, dass das Projekt nicht nur funktioniert, sondern methodisch entwickelt wurde. Genau das macht die technische Kompetenz sichtbar und erfüllt den Developer-Fokus des Bewertungsrasters.
+## Beispielhafter Upload-Ablauf
+
+```mermaid
+sequenceDiagram
+    actor User as Benutzer
+    participant Browser
+    participant Backend as FastAPI
+    participant DB as Datenbank
+    participant FS as Dateispeicher
+    participant OCR as OCR-Pipeline
+
+    User->>Browser: Datei auswählen + Upload
+    Browser->>Backend: POST /upload-web (Multipart)
+    Backend->>Backend: SHA-256-Prüfsumme berechnen
+    Backend->>DB: Duplikatprüfung (Checksum + Name + Größe)
+
+    alt Duplikat erkannt
+        Backend->>DB: pending_uploads anlegen
+        Backend-->>Browser: Duplikat-Entscheidungsseite
+    else Kein Duplikat
+        Backend->>Backend: Datei mit Fernet verschlüsseln
+        Backend->>FS: Verschlüsselte Datei speichern
+        Backend->>DB: Dokument + Version anlegen
+        Backend->>OCR: Textextraktion starten
+        OCR-->>Backend: Extrahierter Text
+        Backend->>DB: OCR-Text speichern
+        Backend-->>Browser: Erfolg → Redirect zur Dokumentliste
+    end
+```
+
+---
+
+## Architekturentscheidungen
+
+Die Architektur wurde bewusst modular aufgebaut, obwohl eine simplere Struktur (eine Datei, ein paar Routen, direkte SQL-Statements) kurzfristig schneller gewesen wäre. Die gewählte Schichtentrennung bringt konkrete Vorteile:
+
+- **Testbarkeit**: Services lassen sich unabhängig von HTTP-Transporten testen.
+- **Wartbarkeit**: Neue Features wie zusätzliche Dateitypen oder erweiterte Suche erfordern keine Umstrukturierung.
+- **Teamfähigkeit**: Klare Modulverantwortlichkeiten reduzieren Merge-Konflikte.
+- **Nachvollziehbarkeit**: Die Struktur selbst dokumentiert, wo welche Logik zu finden ist.

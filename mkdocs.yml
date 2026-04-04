@@ -1,5 +1,5 @@
 site_name: Dokumentenmanager
-site_description: Hochwertige Web-Projektdokumentation zum Dokumentenmanager
+site_description: Projektdokumentation zum Dokumentenmanager – sichere, strukturierte Dokumentenverwaltung
 site_author: Christian Schweitzer, Cristian Radici, Raphael Hirschmann
 site_url: https://chfchris.github.io/Dokumentation-zur-Projektarbeit/
 
@@ -7,13 +7,11 @@ repo_url: https://github.com/CHFChris/Dokumentation-zur-Projektarbeit
 repo_name: CHFChris/Dokumentation-zur-Projektarbeit
 edit_uri: edit/main/docs/
 
-dev_addr: 127.0.0.1:8010
-
 theme:
   name: material
   language: de
-  logo: assets/logo.jpg
-  favicon: assets/logo.jpg
+  logo: assets/images/logo.jpg
+  favicon: assets/images/logo.jpg
   features:
     - navigation.instant
     - navigation.tracking
@@ -33,33 +31,30 @@ theme:
       accent: amber
       toggle:
         icon: material/weather-night
-        name: Dunkelmodus
+        name: Dunkelmodus aktivieren
     - scheme: slate
       primary: black
       accent: blue
       toggle:
         icon: material/weather-sunny
-        name: Hellmodus
+        name: Hellmodus aktivieren
 
 nav:
   - Home: index.md
-  - Installation & Quick Start: installation-quickstart.md
-  - Betrieb & Deployment: operations.md
+  - Installation & Quickstart: installation.md
   - Technische Dokumentation:
       - Architektur: developer/architecture.md
       - Datenbankmodell: developer/database.md
       - API-Referenz: developer/api.md
       - Projektstruktur: developer/file-structure.md
-      - Security-Konzept: developer/security.md
+      - Sicherheitskonzept: developer/security.md
   - Nutzungshandbuch:
-      - Überblick: user-guide/overview.md
-      - Use-Cases: user-guide/use-cases.md
-      - UI-Screenshots: user-guide/ui-screenshots.md
-      - Beispiel-Daten: user-guide/example-data.md
-      - UI-Mockups: user-guide/ui-mockups.md
-  - Technische Strategie: technical-strategy.md
+      - Überblick & Use-Cases: user-guide/overview.md
+      - UI-Screenshots: user-guide/screenshots.md
+      - Beispieldaten & Demo: user-guide/example-data.md
+  - Technische Strategie: strategy.md
+  - Betrieb & Deployment: operations.md
   - Projektinfo: project-info.md
-  - Format & Deliverables: format-deliverables.md
 
 plugins:
   - search
@@ -72,19 +67,20 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.details
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      anchor_linenums: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
 
 extra_css:
   - stylesheets/extra.css
-
-extra_javascript:
-  - javascripts/mermaid.js
 
 extra:
   generator: false

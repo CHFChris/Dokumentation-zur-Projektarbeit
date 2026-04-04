@@ -1,40 +1,66 @@
 # Dokumentenmanager
 
-![Dokumentenmanager Logo](assets/logo.jpg){ width="260" }
+![Dokumentenmanager Logo](assets/images/logo.jpg){ width="240" }
 
 ![Build Status](https://img.shields.io/badge/Build-passing-brightgreen)
 ![Version](https://img.shields.io/badge/Version-1.0.0-blue)
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?logo=fastapi&logoColor=white)
 ![Lizenz](https://img.shields.io/badge/Lizenz-Schulprojekt-lightgrey)
-![Deployment](https://img.shields.io/badge/Deployment-GitHub%20Pages-success)
+
+---
 
 ## Strukturierte, sichere und nachvollziehbare Dokumentenverwaltung
 
-Der Dokumentenmanager ist eine webbasierte Softwarelösung zur zentralen Ablage, Kategorisierung, Verschlüsselung und Recherche digitaler Dokumente. Das Projekt adressiert das in vielen kleinen Teams, Projektgruppen und Lernumgebungen auftretende Problem, dass Dateien unstrukturiert auf lokalen Laufwerken, in Messenger-Verläufen oder in unsystematischen Ordnerstrukturen verteilt werden und dadurch nur mit hohem Zeitaufwand, Unsicherheit und Medienbrüchen wiedergefunden werden können. Die Anwendung richtet sich an Nutzerinnen und Nutzer, die eine nachvollziehbare, selbst kontrollierbare und technisch saubere Dokumentenorganisation benötigen und dabei sowohl funktionale Aspekte wie Upload, Suche, Kategorien und Versionen als auch sicherheitsrelevante Aspekte wie Zugriffskontrolle, Passwortschutz und verschlüsselte Ablage berücksichtigen möchten. Die Software löst dieses Problem durch eine modulare Webarchitektur mit FastAPI, relationaler Persistenz, OCR-gestützter Volltextverarbeitung, versionierbarer Dokumenthistorie, Favoriten und Papierkorb-Logik und schafft damit eine belastbare Grundlage für effiziente, wartbare und künftig erweiterbare Dokumentenprozesse.
+In vielen kleinen Teams, Projektgruppen und Lernumgebungen werden Dateien unstrukturiert auf lokalen Laufwerken, in Messenger-Verläufen oder in unsystematischen Ordnern verteilt. Die spätere Wiederauffindbarkeit, Nachvollziehbarkeit und sichere Verwaltung dieser Dokumente wird schnell zum Problem.
 
-## Warum das Projekt relevant ist
+Der **Dokumentenmanager** löst genau dieses Problem: Eine webbasierte Anwendung zur zentralen Ablage, Kategorisierung, Verschlüsselung und Recherche digitaler Dokumente – gebaut für Nutzer, die eine nachvollziehbare, selbst kontrollierbare und technisch saubere Dokumentenorganisation benötigen.
 
-In vielen realen Arbeitsumgebungen ist die eigentliche Ablage von Dateien nicht das Kernproblem, sondern deren spätere Wiederauffindbarkeit, Nachvollziehbarkeit und sichere Verwaltung. Ein Dokument ist schnell gespeichert, aber ohne konsistente Metadaten, Kategorien, Suchbarkeit und Zugriffsmodell entsteht über die Zeit ein Datenfriedhof mit hübscher Oberfläche. Genau dort setzt der Dokumentenmanager an. Das Projekt verbindet Dateispeicherung, fachliche Strukturierung und technische Schutzmechanismen in einer Anwendung, die nicht nur „Dateien irgendwo hochlädt“, sondern den gesamten Umgang mit Dokumenten als durchgängigen Prozess modelliert: erfassen, verschlagworten, durchsuchen, versionieren, wiederherstellen und kontrolliert löschen.
-
-## Navigation
-
-- [Installation & Quick Start](installation-quickstart.md)
-- [Architektur](developer/architecture.md)
-- [Datenbankmodell](developer/database.md)
-- [API-Referenz](developer/api.md)
-- [Projektstruktur](developer/file-structure.md)
-- [Sicherheitskonzept](developer/security.md)
-- [Nutzungshandbuch](user-guide/overview.md)
-- [Technische Strategie](technical-strategy.md)
-- [Betrieb & Deployment](operations.md)
-- [Format & Abgabe](format-deliverables.md)
+---
 
 ## Kernfunktionen auf einen Blick
 
-- verschlüsselte Dateiablage im Dateisystem
-- relationale Verwaltung von Metadaten in MariaDB/MySQL
-- OCR für PDFs und Bilder zur Volltextsuche
-- Kategorien, Keywords und Suchfilter
-- Versionierung von Dokumenten
-- Favoritenfunktion für schnellen Zugriff
-- Papierkorb mit Wiederherstellung und automatischer Bereinigung
-- rollenbasierte Logik für Benutzerverwaltung und Zugriffsschutz
+| Funktion | Beschreibung |
+|---|---|
+| **Verschlüsselte Ablage** | Dateien werden mit Fernet-Verschlüsselung im Dateisystem gesichert |
+| **OCR-Volltextsuche** | PDFs und Bilder werden per Tesseract durchsuchbar gemacht |
+| **Kategorien & Keywords** | Benutzerdefinierte Kategorisierung mit automatischem Tagging |
+| **Versionierung** | Dokumenthistorie mit Wiederherstellung älterer Stände |
+| **Duplikaterkennung** | Intelligenter Workflow bei erkannten Duplikaten |
+| **Favoriten & Papierkorb** | Schnellzugriff und sichere Löschung mit Wiederherstellung |
+| **MFA & E-Mail-Verifikation** | Mehrstufige Authentifizierung für erhöhte Sicherheit |
+| **Audit-Logging** | Nachvollziehbare Protokollierung sicherheitsrelevanter Aktionen |
+
+---
+
+## Schnelleinstieg
+
+```bash
+git clone https://github.com/CHFChris/Dokumentenmanager.git
+cd Dokumentenmanager
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+# .env anlegen (siehe Installationsanleitung)
+alembic upgrade head
+python -m uvicorn app.main:app --reload --port 8000
+```
+
+Danach erreichbar unter: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+→ Vollständige Anleitung: [Installation & Quickstart](installation.md)
+
+---
+
+## Dokumentationsübersicht
+
+| Bereich | Inhalt |
+|---|---|
+| [Installation & Quickstart](installation.md) | Setup von Klon bis laufende Instanz |
+| [Architektur](developer/architecture.md) | C4-Modell, Schichtenarchitektur, Datenflüsse |
+| [Datenbankmodell](developer/database.md) | ER-Diagramm, Tabellenbeschreibungen, Normalisierung |
+| [API-Referenz](developer/api.md) | Endpunkte, Request/Response-Muster, Fehlercodes |
+| [Projektstruktur](developer/file-structure.md) | Ordneraufbau und Modulverantwortlichkeiten |
+| [Sicherheitskonzept](developer/security.md) | Verschlüsselung, Hashing, Token, Zugriffsschutz |
+| [Nutzungshandbuch](user-guide/overview.md) | Features, Use-Cases, Screenshots |
+| [Technische Strategie](strategy.md) | Stack-Begründung, Skalierbarkeit, Herausforderungen |
+| [Betrieb & Deployment](operations.md) | Produktivbetrieb, Backup, Updates |

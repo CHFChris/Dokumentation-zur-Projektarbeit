@@ -1,39 +1,48 @@
-# Beispiel-Daten
+# Beispieldaten & Demo
 
-Damit neue Nutzer oder Prüfer die Software schnell produktiv testen können, sollten geeignete Beispieldaten vorhanden sein. Dieser Abschnitt beschreibt, welche Daten sich für Demonstration, Test und Abnahme besonders eignen.
+Damit neue Nutzer oder Prüfer die Software schnell produktiv testen können, werden hier geeignete Beispieldaten und ein Demonstrationsablauf beschrieben.
+
+---
 
 ## Test-Accounts
 
-Für Vorführungen empfiehlt sich mindestens ein vorbereiteter Benutzeraccount, damit die Präsentation nicht an der spontanen Neuerstellung scheitert. Wenn rollenbezogene Unterschiede demonstriert werden sollen, sind mehrere Konten sinnvoll.
+Für Vorführungen empfiehlt sich mindestens ein vorbereiteter Benutzeraccount:
 
-Beispielhafte Konstellation:
+| Rolle | Zweck |
+|---|---|
+| **Standardnutzer** | Upload, Suche, Favoriten, Kategorien, Papierkorb |
+| **Administrator** | Erweiterte Verwaltungsfunktionen, Audit-Logs, Benutzerverwaltung |
 
-- Standardnutzer für Upload, Suche und Favoriten
-- Administrativer Nutzer für erweiterte Verwaltungsfunktionen
+!!! tip "Tipp für Präsentationen"
+    Accounts vorab anlegen und verifizieren, damit die Vorführung nicht an der spontanen Registrierung scheitert.
 
-## Beispiel-Dokumente
+---
 
-Sinnvoll sind unterschiedliche Dateitypen und Nutzungsszenarien:
+## Empfohlene Beispiel-Dokumente
 
-- PDF-Rechnung
-- gescanntes Bilddokument
-- Vertragsdokument
-- mehrseitiges PDF mit OCR-relevanten Inhalten
-- Dokument mit bewusst ähnlichem Namen oder gleicher Prüfsumme für Duplikat-Demonstration
+| Dateityp | Beispiel | Demonstrationszweck |
+|---|---|---|
+| PDF-Rechnung | `Rechnung_2026.pdf` | Standard-Upload, Metadaten, OCR |
+| Gescanntes Bild-PDF | `Scan_Vertrag.pdf` | OCR-Textextraktion |
+| DOCX-Vertrag | `Vertragsentwurf.docx` | Alternativer Dateityp |
+| Mehrseitiges PDF | `Projektbericht.pdf` | OCR über mehrere Seiten |
+| Duplikat-Datei | Gleicher Name oder identische Prüfsumme | Duplikat-Entscheidungsworkflow |
 
-## Demonstrationsszenarien
+---
 
-1. Login
-2. Dashboard öffnen
-3. Beispiel-PDF hochladen
-4. OCR-Ergebnis über Suche nachweisen
-5. Dokument als Favorit markieren
-6. In den Papierkorb verschieben
-7. Wiederherstellen
-8. Duplikatfall demonstrieren
+## Demonstrationsablauf
 
-Diese Reihenfolge ist didaktisch sinnvoll, weil sie den gesamten Lebenszyklus eines Dokuments zeigt: Entstehung, Suche, Nutzung, Statusänderung und Wiederherstellung.
+Der folgende Ablauf deckt den gesamten Dokumentenlebenszyklus ab:
 
-## Warum Beispieldaten wichtig sind
+1. **Login** – Mit vorbereitetem Account anmelden
+2. **Dashboard** – Kennzahlen und Navigation zeigen
+3. **Upload** – PDF hochladen, Kategorie zuweisen
+4. **OCR prüfen** – Hochgeladenes Dokument über Volltextsuche finden
+5. **Dokumentdetail** – Metadaten, OCR-Text und Versionen zeigen
+6. **Favorit** – Dokument als Favorit markieren, Favoritenliste prüfen
+7. **Papierkorb** – Dokument löschen, im Papierkorb prüfen, wiederherstellen
+8. **Duplikat** – Gleiche Datei erneut hochladen, Entscheidungsworkflow demonstrieren
+9. **Versionierung** – Neue Version eines bestehenden Dokuments hochladen
+10. **Kategorien** – Neue Kategorie mit Keywords anlegen, automatische Zuordnung zeigen
 
-Eine technisch gute Software kann in einer Bewertung schlecht wirken, wenn Demonstrationen improvisiert ablaufen. Beispieldaten sind deshalb kein Nebenthema, sondern Teil professioneller Vorbereitung. Sie machen die Anwendung nachvollziehbar, vermeiden Leerlauf und belegen Funktionen sichtbar.
+Diese Reihenfolge ist didaktisch aufgebaut und zeigt den gesamten Lebenszyklus eines Dokuments: Entstehung, Suche, Nutzung, Statusänderung und Wiederherstellung.

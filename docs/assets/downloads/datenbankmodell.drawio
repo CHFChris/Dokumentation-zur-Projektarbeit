@@ -1,0 +1,665 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="47yxqSAoqYvpYAtZDj7o" name="Seite-1">
+    <mxGraphModel dx="1113" dy="580" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4960" pageHeight="5200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="501" parent="1" style="rounded=1;arcSize=2;fillColor=#E3F2FD;strokeColor=#0D47A1;opacity=25;verticalAlign=top;align=left;spacingLeft=20;spacingTop=12;fontSize=17;fontStyle=1;strokeWidth=3;" value="Benutzerverwaltung" vertex="1">
+          <mxGeometry height="600" width="1820" x="60" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="502" parent="1" style="rounded=1;arcSize=2;fillColor=#F3E5F5;strokeColor=#4A148C;opacity=25;verticalAlign=top;align=left;spacingLeft=20;spacingTop=12;fontSize=17;fontStyle=1;strokeWidth=3;" value="Authentifizierung und Sicherheit" vertex="1">
+          <mxGeometry height="320" width="2500" x="60" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="503" parent="1" style="rounded=1;arcSize=2;fillColor=#FFF3E0;strokeColor=#BF360C;opacity=25;verticalAlign=top;align=left;spacingLeft=20;spacingTop=12;fontSize=17;fontStyle=1;strokeWidth=3;" value="Administration und Protokollierung" vertex="1">
+          <mxGeometry height="1610" width="520" x="2700" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="504" parent="1" style="rounded=1;arcSize=2;fillColor=#E8F5E9;strokeColor=#1B5E20;opacity=25;verticalAlign=top;align=left;spacingLeft=20;spacingTop=12;fontSize=17;fontStyle=1;strokeWidth=3;" value="Dokumentenverwaltung" vertex="1">
+          <mxGeometry height="710" width="2500" x="60" y="2040" as="geometry" />
+        </mxCell>
+        <mxCell id="505" parent="1" style="rounded=1;arcSize=2;fillColor=#FFFDE7;strokeColor=#F57F17;opacity=25;verticalAlign=top;align=left;spacingLeft=20;spacingTop=12;fontSize=17;fontStyle=1;strokeWidth=3;" value="Dokument-Metadaten" vertex="1">
+          <mxGeometry height="420" width="1800" x="60" y="3340" as="geometry" />
+        </mxCell>
+        <mxCell id="Tr" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#BBDEFB;strokeColor=#0D47A1;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="roles" vertex="1">
+          <mxGeometry height="116" width="420" x="100" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="T_roles__id" parent="Tr" style="text;strokeColor=#0D47A1;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     TINYINT(3) UNSIGNED  NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_roles__name" parent="Tr" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        name                                   VARCHAR(32)           NOT NULL  UNIQUE" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_roles__description" parent="Tr" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        description                            VARCHAR(255)          NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Tu" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#BBDEFB;strokeColor=#0D47A1;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="users" vertex="1">
+          <mxGeometry height="532" width="480" x="700" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__id" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     BIGINT UNSIGNED      NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="480" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__role_id" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    role_id                                TINYINT(3) UNSIGNED  NOT NULL  → roles.id" vertex="1">
+          <mxGeometry height="26" width="480" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__email" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[UQ]    email                                  VARCHAR(255)         NOT NULL  UNIQUE" vertex="1">
+          <mxGeometry height="26" width="480" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__password_hash" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        password_hash                          VARCHAR(255)         NOT NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__display_name" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        display_name                           VARCHAR(120)         NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__username" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[UQ]    username                               VARCHAR(50)          NOT NULL  UNIQUE" vertex="1">
+          <mxGeometry height="26" width="480" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__is_active" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        is_active                              TINYINT(1)           NOT NULL  DEFAULT 1" vertex="1">
+          <mxGeometry height="26" width="480" y="194" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__is_verified" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        is_verified                            TINYINT(1)           NOT NULL  DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="480" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__email_verified_at" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        email_verified_at                      DATETIME             NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="246" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__password_changed_at" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        password_changed_at                    DATETIME             NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__language" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        language                               VARCHAR(10)          DEFAULT &#39;de&#39;" vertex="1">
+          <mxGeometry height="26" width="480" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__ui_notifications_enabled" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        ui_notifications_enabled               TINYINT(1)           DEFAULT 1" vertex="1">
+          <mxGeometry height="26" width="480" y="324" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__security_email_new_device_enabled" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        security_email_new_device_enabled      TINYINT(1)          DEFAULT 1" vertex="1">
+          <mxGeometry height="26" width="480" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__mfa_enabled" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        mfa_enabled                            TINYINT(1)           DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="480" y="376" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__mfa_method" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        mfa_method                             VARCHAR(16)          DEFAULT &#39;email&#39;" vertex="1">
+          <mxGeometry height="26" width="480" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__mfa_opt_out" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        mfa_opt_out                            TINYINT(1)           DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="480" y="428" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__dashboard_protected_view" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        dashboard_protected_view               TINYINT(1)           DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="480" y="454" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__created_at" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             TIMESTAMP            DEFAULT NOW()" vertex="1">
+          <mxGeometry height="26" width="480" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="T_users__updated_at" parent="Tu" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        updated_at                             TIMESTAMP            ON UPDATE NOW()" vertex="1">
+          <mxGeometry height="26" width="480" y="506" as="geometry" />
+        </mxCell>
+        <mxCell id="Ts" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#BBDEFB;strokeColor=#0D47A1;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="sessions" vertex="1">
+          <mxGeometry height="194" width="420" x="1380" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="T_sessions__id" parent="Ts" style="text;strokeColor=#0D47A1;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     CHAR(64)             NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_sessions__user_id" parent="Ts" style="text;strokeColor=#0D47A1;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    user_id                                BIGINT UNSIGNED       NOT NULL  → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_sessions__expires_at" parent="Ts" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        expires_at                             DATETIME             NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_sessions__ip_address" parent="Ts" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        ip_address                             VARCHAR(45)           NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_sessions__user_agent" parent="Ts" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        user_agent                             VARCHAR(255)          NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_sessions__created_at" parent="Ts" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             TIMESTAMP             DEFAULT NOW()" vertex="1">
+          <mxGeometry height="26" width="420" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="Tq" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#BBDEFB;strokeColor=#0D47A1;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="quotas" vertex="1">
+          <mxGeometry height="116" width="420" x="1380" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="T_quotas__user_id" parent="Tq" style="text;strokeColor=#0D47A1;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK+FK] user_id                                BIGINT UNSIGNED       NOT NULL  → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_quotas__max_bytes" parent="Tq" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        max_bytes                              BIGINT UNSIGNED       NOT NULL  DEFAULT 5368709120" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_quotas__used_bytes" parent="Tq" style="text;strokeColor=#0D47A1;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        used_bytes                             BIGINT UNSIGNED       NOT NULL  DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Tm" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#E1BEE7;strokeColor=#4A148C;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="mfa_codes" vertex="1">
+          <mxGeometry height="194" width="420" x="100" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="T_mfa_codes__id" parent="Tm" style="text;strokeColor=#4A148C;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     CHAR(36)             NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_mfa_codes__user_id" parent="Tm" style="text;strokeColor=#4A148C;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    user_id                                BIGINT UNSIGNED       NOT NULL  → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_mfa_codes__code" parent="Tm" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        code                                   VARCHAR(16)           NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_mfa_codes__purpose" parent="Tm" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        purpose                                VARCHAR(32)           NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_mfa_codes__expires_at" parent="Tm" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        expires_at                             DATETIME             NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_mfa_codes__used" parent="Tm" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        used                                   TINYINT(1)            DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="420" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="Tp" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#E1BEE7;strokeColor=#4A148C;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="password_reset_tokens" vertex="1">
+          <mxGeometry height="220" width="420" x="700" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="T_password_reset_tokens__id" parent="Tp" style="text;strokeColor=#4A148C;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     BIGINT UNSIGNED       NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_password_reset_tokens__user_id" parent="Tp" style="text;strokeColor=#4A148C;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    user_id                                BIGINT UNSIGNED       NOT NULL  → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_password_reset_tokens__token_hash" parent="Tp" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[UQ]    token_hash                             VARCHAR(64)           NOT NULL  UNIQUE" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_password_reset_tokens__expires_at" parent="Tp" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        expires_at                             DATETIME             NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_password_reset_tokens__used_at" parent="Tp" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        used_at                                DATETIME             NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_password_reset_tokens__created_at" parent="Tp" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             DATETIME             DEFAULT NOW()" vertex="1">
+          <mxGeometry height="26" width="420" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="T_password_reset_tokens__used" parent="Tp" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        used                                   TINYINT(1)            DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="420" y="194" as="geometry" />
+        </mxCell>
+        <mxCell id="Tet" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#E1BEE7;strokeColor=#4A148C;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="email_verification_tokens" vertex="1">
+          <mxGeometry height="194" width="420" x="1380" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="T_email_verification_tokens__id" parent="Tet" style="text;strokeColor=#4A148C;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     BIGINT UNSIGNED       NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_email_verification_tokens__user_id" parent="Tet" style="text;strokeColor=#4A148C;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    user_id                                BIGINT UNSIGNED       NOT NULL  → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_email_verification_tokens__token" parent="Tet" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[UQ]    token                                  VARCHAR(128)          NOT NULL  UNIQUE" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_email_verification_tokens__created_at" parent="Tet" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             DATETIME             NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_email_verification_tokens__expires_at" parent="Tet" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        expires_at                             DATETIME             NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_email_verification_tokens__used_at" parent="Tet" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        used_at                                DATETIME             NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="Tee" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#E1BEE7;strokeColor=#4A148C;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="email_verification_events" vertex="1">
+          <mxGeometry height="142" width="420" x="2060" y="1100" as="geometry" />
+        </mxCell>
+        <mxCell id="T_email_verification_events__id" parent="Tee" style="text;strokeColor=#4A148C;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     BIGINT UNSIGNED       NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_email_verification_events__user_id" parent="Tee" style="text;strokeColor=#4A148C;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    user_id                                BIGINT UNSIGNED       NOT NULL  → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_email_verification_events__kind" parent="Tee" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        kind                                   ENUM(&#39;send&#39;,&#39;resend&#39;)  NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_email_verification_events__created_at" parent="Tee" style="text;strokeColor=#4A148C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             DATETIME             NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="Tad" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#FFE0B2;strokeColor=#BF360C;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="admin_actions" vertex="1">
+          <mxGeometry height="194" width="420" x="2740" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="T_admin_actions__id" parent="Tad" style="text;strokeColor=#BF360C;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     BIGINT UNSIGNED  NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_admin_actions__admin_user_id" parent="Tad" style="text;strokeColor=#BF360C;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    admin_user_id                          BIGINT UNSIGNED  NOT NULL  → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_admin_actions__target_user_id" parent="Tad" style="text;strokeColor=#BF360C;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    target_user_id                         BIGINT UNSIGNED  NULL      → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_admin_actions__action" parent="Tad" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        action                                 VARCHAR(128)     NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_admin_actions__note" parent="Tad" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        note                                   TEXT             NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_admin_actions__created_at" parent="Tad" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             TIMESTAMP        DEFAULT NOW()" vertex="1">
+          <mxGeometry height="26" width="420" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="Tac" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#FFE0B2;strokeColor=#BF360C;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="access_logs" vertex="1">
+          <mxGeometry height="246" width="420" x="2740" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="T_access_logs__id" parent="Tac" style="text;strokeColor=#BF360C;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     BIGINT UNSIGNED  NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_access_logs__user_id" parent="Tac" style="text;strokeColor=#BF360C;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    user_id                                BIGINT UNSIGNED  NULL      → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_access_logs__document_id" parent="Tac" style="text;strokeColor=#BF360C;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    document_id                            BIGINT UNSIGNED  NULL      → documents.id" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_access_logs__action" parent="Tac" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        action                                 VARCHAR(64)      NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_access_logs__success" parent="Tac" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        success                                TINYINT(1)       NOT NULL  DEFAULT 1" vertex="1">
+          <mxGeometry height="26" width="420" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_access_logs__ip_address" parent="Tac" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        ip_address                             VARCHAR(45)      NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="T_access_logs__user_agent" parent="Tac" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        user_agent                             VARCHAR(255)     NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="194" as="geometry" />
+        </mxCell>
+        <mxCell id="T_access_logs__created_at" parent="Tac" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             TIMESTAMP        DEFAULT NOW()" vertex="1">
+          <mxGeometry height="26" width="420" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="Tpu" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#FFE0B2;strokeColor=#BF360C;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="pending_uploads" vertex="1">
+          <mxGeometry height="350" width="420" x="2740" y="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__id" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     BIGINT UNSIGNED  NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__owner_user_id" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    owner_user_id                          BIGINT UNSIGNED  NOT NULL  → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__token" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[UQ]    token                                  CHAR(36)         NOT NULL  UNIQUE" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__kind" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        kind                                   VARCHAR(16)      NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__target_document_id" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=#FFE0B2;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[*]     target_document_id                     BIGINT UNSIGNED  NULL  → documents.id (logisch)" vertex="1">
+          <mxGeometry height="26" width="420" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__original_filename" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        original_filename                      VARCHAR(255)     NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__mime_type" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        mime_type                              VARCHAR(120)     NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="194" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__size_bytes" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        size_bytes                             BIGINT UNSIGNED  DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="420" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__checksum_sha256" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        checksum_sha256                        VARCHAR(64)      NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="246" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__storage_path" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        storage_path                           VARCHAR(1000)    NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__created_at" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             DATETIME(6)      DEFAULT NOW(6)" vertex="1">
+          <mxGeometry height="26" width="420" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="T_pending_uploads__expires_at" parent="Tpu" style="text;strokeColor=#BF360C;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        expires_at                             DATETIME(6)      NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="324" as="geometry" />
+        </mxCell>
+        <mxCell id="Tfl" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#C8E6C9;strokeColor=#1B5E20;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="folders" vertex="1">
+          <mxGeometry height="194" width="420" x="100" y="2200" as="geometry" />
+        </mxCell>
+        <mxCell id="T_folders__id" parent="Tfl" style="text;strokeColor=#1B5E20;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     BIGINT UNSIGNED  NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_folders__owner_user_id" parent="Tfl" style="text;strokeColor=#1B5E20;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    owner_user_id                          BIGINT UNSIGNED  NOT NULL  → users.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_folders__parent_id" parent="Tfl" style="text;strokeColor=#1B5E20;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    parent_id                              BIGINT UNSIGNED  NULL      → folders.id" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_folders__name" parent="Tfl" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        name                                   VARCHAR(150)     NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_folders__created_at" parent="Tfl" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             TIMESTAMP        DEFAULT NOW()" vertex="1">
+          <mxGeometry height="26" width="420" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_folders__updated_at" parent="Tfl" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        updated_at                             TIMESTAMP        ON UPDATE NOW()" vertex="1">
+          <mxGeometry height="26" width="420" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="Td" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#C8E6C9;strokeColor=#1B5E20;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="documents" vertex="1">
+          <mxGeometry height="610" width="480" x="700" y="2100" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__id" parent="Td" style="text;strokeColor=#1B5E20;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     BIGINT UNSIGNED      NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="480" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__owner_user_id" parent="Td" style="text;strokeColor=#1B5E20;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    owner_user_id                          BIGINT UNSIGNED      NOT NULL  → users.id" vertex="1">
+          <mxGeometry height="26" width="480" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__folder_id" parent="Td" style="text;strokeColor=#1B5E20;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    folder_id                              BIGINT UNSIGNED      NULL      → folders.id" vertex="1">
+          <mxGeometry height="26" width="480" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__storage_provider_id" parent="Td" style="text;strokeColor=#1B5E20;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    storage_provider_id                    SMALLINT(5) UNSIGNED NOT NULL  → storage_providers.id" vertex="1">
+          <mxGeometry height="26" width="480" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__category_id" parent="Td" style="text;strokeColor=#1B5E20;fillColor=#FFE0B2;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[*]     category_id                            INT(11)              NULL      → categories.id (logisch)" vertex="1">
+          <mxGeometry height="26" width="480" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__filename" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        filename                               VARCHAR(255)         NOT NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__original_filename" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        original_filename                      VARCHAR(255)         NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="194" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__stored_name" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[UQ]    stored_name                            VARCHAR(64)          NULL      UNIQUE" vertex="1">
+          <mxGeometry height="26" width="480" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__mime_type" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        mime_type                              VARCHAR(120)         NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="246" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__size_bytes" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        size_bytes                             BIGINT UNSIGNED      DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="480" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__storage_path" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        storage_path                           VARCHAR(1000)        NOT NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__storage_key_encrypted" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        storage_key_encrypted                  VARBINARY(2048)      NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="324" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__checksum_sha256" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        checksum_sha256                        CHAR(64)             NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__is_deleted" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        is_deleted                             TINYINT(1)           DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="480" y="376" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__deleted_at" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        deleted_at                             DATETIME             NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__ocr_text" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        ocr_text                               TEXT                 NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="428" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__summary_text" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        summary_text                           TEXT                 NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="454" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__summary_model" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        summary_model                          VARCHAR(120)         NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__summary_updated_at" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        summary_updated_at                     DATETIME             NULL" vertex="1">
+          <mxGeometry height="26" width="480" y="506" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__is_favorite" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        is_favorite                            TINYINT(1)           DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="480" y="532" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__created_at" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             TIMESTAMP            DEFAULT NOW()" vertex="1">
+          <mxGeometry height="26" width="480" y="558" as="geometry" />
+        </mxCell>
+        <mxCell id="T_documents__updated_at" parent="Td" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        updated_at                             TIMESTAMP            ON UPDATE NOW()" vertex="1">
+          <mxGeometry height="26" width="480" y="584" as="geometry" />
+        </mxCell>
+        <mxCell id="Tsp" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#C8E6C9;strokeColor=#1B5E20;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="storage_providers" vertex="1">
+          <mxGeometry height="168" width="420" x="1380" y="2200" as="geometry" />
+        </mxCell>
+        <mxCell id="T_storage_providers__id" parent="Tsp" style="text;strokeColor=#1B5E20;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     SMALLINT(5) UNSIGNED  NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_storage_providers__name" parent="Tsp" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[UQ]    name                                   VARCHAR(64)            NOT NULL  UNIQUE" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_storage_providers__type" parent="Tsp" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        type                                   VARCHAR(32)            NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_storage_providers__config_json" parent="Tsp" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        config_json                            TEXT                   NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_storage_providers__is_active" parent="Tsp" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        is_active                              TINYINT(1)             DEFAULT 1" vertex="1">
+          <mxGeometry height="26" width="420" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="Tca" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#C8E6C9;strokeColor=#1B5E20;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="categories" vertex="1">
+          <mxGeometry height="142" width="420" x="2060" y="2200" as="geometry" />
+        </mxCell>
+        <mxCell id="T_categories__id" parent="Tca" style="text;strokeColor=#1B5E20;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     BIGINT UNSIGNED  NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_categories__user_id" parent="Tca" style="text;strokeColor=#1B5E20;fillColor=#FFE0B2;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[*]     user_id                                INT(11)          NOT NULL  → users.id (logisch)" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_categories__name" parent="Tca" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        name                                   VARCHAR(100)     NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_categories__keywords" parent="Tca" style="text;strokeColor=#1B5E20;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        keywords                               TEXT             NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="Tdv" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="document_versions" vertex="1">
+          <mxGeometry height="324" width="420" x="100" y="3400" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__id" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    id                                     INT(11)         NOT NULL  AUTO_INCREMENT" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__document_id" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=#DDD0F8;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[FK]    document_id                            BIGINT UNSIGNED  NOT NULL  → documents.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__version_number" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        version_number                         INT(11)          NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__storage_path" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        storage_path                           VARCHAR(1000)    NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="116" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__storage_key_encrypted" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        storage_key_encrypted                  VARBINARY(2048)  NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__checksum_sha256" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        checksum_sha256                        VARCHAR(64)      NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="168" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__size_bytes" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        size_bytes                             BIGINT           DEFAULT 0" vertex="1">
+          <mxGeometry height="26" width="420" y="194" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__mime_type" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        mime_type                              VARCHAR(120)     NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__note" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        note                                   VARCHAR(255)     NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="246" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__created_at" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             DATETIME         DEFAULT NOW()" vertex="1">
+          <mxGeometry height="26" width="420" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_versions__updated_at" parent="Tdv" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        updated_at                             DATETIME         ON UPDATE NOW()" vertex="1">
+          <mxGeometry height="26" width="420" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="Tdt" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="document_tags" vertex="1">
+          <mxGeometry height="116" width="420" x="700" y="3400" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_tags__document_id" parent="Tdt" style="text;strokeColor=#F57F17;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK+FK] document_id                            BIGINT UNSIGNED  NOT NULL  → documents.id" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_tags__tag" parent="Tdt" style="text;strokeColor=#F57F17;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK]    tag                                    VARCHAR(64)      NOT NULL" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_tags__created_at" parent="Tdt" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             TIMESTAMP        DEFAULT NOW()" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Tdc" parent="1" style="swimlane;fontStyle=1;align=center;startSize=38;fillColor=#FFF9C4;strokeColor=#F57F17;fontSize=14;fontColor=#111;horizontal=1;collapsible=0;rounded=1;arcSize=3;strokeWidth=2;" value="document_categories" vertex="1">
+          <mxGeometry height="116" width="420" x="1380" y="3400" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_categories__document_id" parent="Tdc" style="text;strokeColor=#F57F17;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK+FK] document_id                            BIGINT UNSIGNED  NOT NULL  → documents.id" vertex="1">
+          <mxGeometry height="26" width="420" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_categories__category_id" parent="Tdc" style="text;strokeColor=#F57F17;fillColor=#C5DCFF;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="[PK+FK] category_id                            BIGINT UNSIGNED  NOT NULL  → categories.id" vertex="1">
+          <mxGeometry height="26" width="420" y="64" as="geometry" />
+        </mxCell>
+        <mxCell id="T_document_categories__created_at" parent="Tdc" style="text;strokeColor=#F57F17;fillColor=none;align=left;verticalAlign=middle;spacingLeft=8;overflow=hidden;rotatable=0;portConstraint=eastwest;html=0;fontSize=11;fontFamily=Courier New;" value="        created_at                             TIMESTAMP        DEFAULT NOW()" vertex="1">
+          <mxGeometry height="26" width="420" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="E_Tu_Tr_role_id" edge="1" parent="1" source="T_users__role_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#0D47A1;fillColor=#0D47A1;jumpStyle=gap;jumpSize=8;" target="T_roles__id" value="N:1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E_Ts_Tu_user_id" edge="1" parent="1" source="T_sessions__user_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#6A1B9A;fillColor=#6A1B9A;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E_Tq_Tu_user_id" edge="1" parent="1" source="T_quotas__user_id" style="endArrow=ERmandOne;startArrow=ERone;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#00695C;fillColor=#00695C;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="1:1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E_Tm_Tu_user_id" edge="1" parent="1" source="T_mfa_codes__user_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#AD1457;fillColor=#AD1457;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="1177" />
+              <mxPoint x="610" y="900" />
+              <mxPoint x="699" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tp_Tu_user_id" edge="1" parent="1" source="T_password_reset_tokens__user_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#E65100;fillColor=#E65100;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="40" y="1177" />
+              <mxPoint x="40" y="910" />
+              <mxPoint x="699" y="910" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tet_Tu_user_id" edge="1" parent="1" source="T_email_verification_tokens__user_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#2E7D32;fillColor=#2E7D32;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1260" y="1177" />
+              <mxPoint x="1260" y="920" />
+              <mxPoint x="1181" y="920" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tee_Tu_user_id" edge="1" parent="1" source="T_email_verification_events__user_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#00838F;fillColor=#00838F;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1860" y="1177" />
+              <mxPoint x="1860" y="930" />
+              <mxPoint x="1181" y="930" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tad_Tu_admin_user_id" edge="1" parent="1" source="T_admin_actions__admin_user_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#4527A0;fillColor=#4527A0;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2620" y="177" />
+              <mxPoint x="2620" y="50" />
+              <mxPoint x="1181" y="50" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tad_Tu_target_user_id" edge="1" parent="1" source="T_admin_actions__target_user_id" style="endArrow=ERzeroToOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#6D4C41;fillColor=#6D4C41;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:0..1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2630" y="203" />
+              <mxPoint x="2630" y="60" />
+              <mxPoint x="1181" y="60" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tac_Tu_user_id" edge="1" parent="1" source="T_access_logs__user_id" style="endArrow=ERzeroToOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#37474F;fillColor=#37474F;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:0..1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2640" y="757" />
+              <mxPoint x="2640" y="70" />
+              <mxPoint x="1181" y="70" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tac_Td_document_id" edge="1" parent="1" source="T_access_logs__document_id" style="endArrow=ERzeroToOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#C62828;fillColor=#C62828;jumpStyle=gap;jumpSize=8;" target="T_documents__id" value="N:0..1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2650" y="783" />
+              <mxPoint x="2650" y="1700" />
+              <mxPoint x="1181" y="1700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tpu_Tu_owner_user_id" edge="1" parent="1" source="T_pending_uploads__owner_user_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#1565C0;fillColor=#1565C0;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2660" y="1357" />
+              <mxPoint x="2660" y="80" />
+              <mxPoint x="1181" y="80" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tpu_Td_target_document_id" edge="1" parent="1" source="T_pending_uploads__target_document_id" style="endArrow=ERzeroToOne;startArrow=ERmany;html=1;dashed=1;dashPattern=8 4;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=1.8;strokeColor=#7B1FA2;fillColor=#7B1FA2;jumpStyle=gap;jumpSize=8;" target="T_documents__id" value="N:0..1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2670" y="1435" />
+              <mxPoint x="2670" y="1710" />
+              <mxPoint x="1181" y="1710" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tfl_Tu_owner_user_id" edge="1" parent="1" source="T_folders__owner_user_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#1B5E20;fillColor=#1B5E20;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="40" y="2277" />
+              <mxPoint x="40" y="940" />
+              <mxPoint x="699" y="940" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tfl_Tfl_parent_id" edge="1" parent="1" source="T_folders__parent_id" style="endArrow=ERzeroToOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#4E342E;fillColor=#4E342E;jumpStyle=gap;jumpSize=8;" target="T_folders__id" value="N:0..1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="30" y="2303" />
+              <mxPoint x="30" y="2251" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Td_Tu_owner_user_id" edge="1" parent="1" source="T_documents__owner_user_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#283593;fillColor=#283593;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="50" y="2177" />
+              <mxPoint x="50" y="950" />
+              <mxPoint x="699" y="950" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Td_Tfl_folder_id" edge="1" parent="1" source="T_documents__folder_id" style="endArrow=ERzeroToOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#880E4F;fillColor=#880E4F;jumpStyle=gap;jumpSize=8;" target="T_folders__id" value="N:0..1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E_Td_Tsp_storage_provider_id" edge="1" parent="1" source="T_documents__storage_provider_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#006064;fillColor=#006064;jumpStyle=gap;jumpSize=8;" target="T_storage_providers__id" value="N:1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="E_Td_Tca_category_id" edge="1" parent="1" source="T_documents__category_id" style="endArrow=ERzeroToOne;startArrow=ERmany;html=1;dashed=1;dashPattern=8 4;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=1.8;strokeColor=#E65100;fillColor=#E65100;jumpStyle=gap;jumpSize=8;" target="T_categories__id" value="N:0..1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1870" y="2255" />
+              <mxPoint x="1870" y="1720" />
+              <mxPoint x="2059" y="1720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tdv_Td_document_id" edge="1" parent="1" source="T_document_versions__document_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#33691E;fillColor=#33691E;jumpStyle=gap;jumpSize=8;" target="T_documents__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="3477" />
+              <mxPoint x="600" y="3200" />
+              <mxPoint x="699" y="3200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tdt_Td_document_id" edge="1" parent="1" source="T_document_tags__document_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#B71C1C;fillColor=#B71C1C;jumpStyle=gap;jumpSize=8;" target="T_documents__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1250" y="3451" />
+              <mxPoint x="1250" y="3210" />
+              <mxPoint x="1181" y="3210" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tdc_Td_document_id" edge="1" parent="1" source="T_document_categories__document_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#0277BD;fillColor=#0277BD;jumpStyle=gap;jumpSize=8;" target="T_documents__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1270" y="3451" />
+              <mxPoint x="1270" y="3220" />
+              <mxPoint x="1181" y="3220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tdc_Tca_category_id" edge="1" parent="1" source="T_document_categories__category_id" style="endArrow=ERmandOne;startArrow=ERmany;html=1;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=2.2;strokeColor=#558B2F;fillColor=#558B2F;jumpStyle=gap;jumpSize=8;" target="T_categories__id" value="N:1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1920" y="3477" />
+              <mxPoint x="1920" y="2251" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E_Tca_Tu_user_id" edge="1" parent="1" source="T_categories__user_id" style="endArrow=ERzeroToOne;startArrow=ERmany;html=1;dashed=1;dashPattern=8 4;edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=11;fontStyle=3;labelBackgroundColor=#ffffff;labelBorderColor=none;strokeWidth=1.8;strokeColor=#BF360C;fillColor=#BF360C;jumpStyle=gap;jumpSize=8;" target="T_users__id" value="N:0..1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2680" y="2277" />
+              <mxPoint x="2680" y="90" />
+              <mxPoint x="1181" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
