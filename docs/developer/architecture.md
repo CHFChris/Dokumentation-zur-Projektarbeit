@@ -165,6 +165,41 @@ sequenceDiagram
 
 ---
 
+## Detailliertes Ablaufdiagramm: Duplikat-Upload-Workflow
+
+Während das obenstehende Sequenzdiagramm den Upload-Pfad auf Komponentenebene zeigt, dokumentiert das folgende Aktivitätsdiagramm den vollständigen Kontrollfluss des Uploads inklusive der Duplikatbehandlung. Die Darstellung ist nach Verantwortungsbereichen in drei Swimlanes gegliedert – **Benutzer**, **System** (FastAPI-Backend) und **Datenbank** – und macht sichtbar, an welchen Stellen welche Komponente aktiv ist und welche Entscheidungen getroffen werden.
+
+![Ablaufdiagramm Duplikat-Upload-Workflow](../assets/images/duplikat-ablaufdiagramm.png){ loading=lazy }
+
+[🖼️ Ablaufdiagramm als PNG herunterladen](../assets/images/duplikat-ablaufdiagramm.png){ .md-button .md-button--primary }
+[📥 Ablaufdiagramm als .drawio herunterladen](../assets/downloads/duplikat-ablaufdiagramm.drawio){ .md-button }
+
+### Zentrale Entscheidungspunkte
+
+Das Diagramm zeigt zwei kritische Verzweigungen, die den Workflow wesentlich prägen:
+
+**1. Dateivalidierung (`Datei gültig?`)** – Bevor überhaupt eine Prüfsummenberechnung stattfindet, werden Dateityp, Dateigröße und Nicht-Leere geprüft. Ungültige Dateien werden mit einer Fehlermeldung abgewiesen und der Benutzer zur Upload-Seite zurückgeleitet. Dadurch wird verhindert, dass unbrauchbare Uploads überhaupt in die weitere Pipeline gelangen.
+
+**2. Duplikaterkennung (`Duplikat gefunden?`)** – Nach der Hash-Berechnung fragt das System die Datenbank, ob bereits ein Dokument mit identischer Checksumme oder identischer Kombination aus Dateiname und Größe existiert. Ohne Treffer läuft der Upload ohne Unterbrechung durch. Bei einem Treffer wird ein `pending_uploads`-Eintrag angelegt und der Benutzer erhält einen Duplikathinweis mit drei Handlungsoptionen.
+
+### Drei-Wege-Entscheidung bei Duplikaten
+
+Die Entscheidung `Welche Option wurde gewählt?` ist das Herzstück des Duplikat-Workflows. Statt den Benutzer mit einem „Upload fehlgeschlagen" abzuweisen oder stillschweigend zu überschreiben, bietet das System drei klar unterscheidbare Pfade:
+
+| Option | Ablauf | Ergebnis |
+|---|---|---|
+| **Neue Datei zusätzlich speichern** | Der gepufferte Upload wird als *neues, eigenständiges* Dokument übernommen. OCR und Auto-Kategorisierung laufen auf dem neuen Eintrag. | Zwei Dokumente bleiben parallel im System. |
+| **Altes Dokument ersetzen** | Das bestehende Dokument wird gelöscht, der gepufferte Upload übernimmt dessen Position und wird neu verarbeitet. | Nur noch der neue Stand ist aktiv. |
+| **Neue Datei verwerfen** | Der gepufferte Upload wird gelöscht, ein Audit-Log-Eintrag `DUPLICATE_DISCARD` wird geschrieben. | Ursprungszustand bleibt unverändert, die Entscheidung ist nachvollziehbar protokolliert. |
+
+### Warum dieser Workflow fachlich sinnvoll ist
+
+Ein naiver Upload-Handler würde bei Duplikaten entweder den neuen Upload verwerfen (Datenverlust-Risiko, wenn der Benutzer eine tatsächlich andere Version hochladen wollte) oder das bestehende Dokument blind überschreiben (Datenverlust-Risiko in der anderen Richtung). Beide Varianten sind in der Praxis unbrauchbar, weil sie die Entscheidung der Software überlassen, die den Kontext nicht kennen kann.
+
+Die hier dokumentierte Lösung hebt die Entscheidung eine Ebene höher – zum Benutzer – und gewährleistet gleichzeitig durch die Zwischenspeicherung in `pending_uploads`, dass keine halbfertigen Zustände entstehen, wenn der Benutzer den Dialog abbricht. Nicht bestätigte Pending-Uploads werden nach Ablauf automatisch bereinigt.
+
+---
+
 ## Architekturentscheidungen
 
 Die Architektur wurde bewusst modular aufgebaut, obwohl eine simplere Struktur (eine Datei, ein paar Routen, direkte SQL-Statements) kurzfristig schneller gewesen wäre. Die gewählte Schichtentrennung bringt konkrete Vorteile:
